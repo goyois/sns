@@ -6,6 +6,7 @@ import com.sns.member.domain.entity.Member;
 import com.sns.member.mapper.MemberMapper;
 import com.sns.member.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Positive;
 @RequestMapping("/v1/members")
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;

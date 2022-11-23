@@ -16,11 +16,6 @@ public class ErrorResponse {
     private List<FieldError> fieldErrors; // (1)
     private List<ConstraintViolationError> violationErrors;
 
-//    private ErrorResponse(final List<FieldError> fieldErrors,
-//                          final List<ConstraintViolationError> violationErrors) {
-//        this.fieldErrors = fieldErrors;
-//        this.violationErrors = violationErrors;
-//    }
 
     //  BindingResult에 대한 ErrorResponse 객체 생성
     public static ErrorResponse of(BindingResult bindingResult) {

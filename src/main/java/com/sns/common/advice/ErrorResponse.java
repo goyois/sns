@@ -13,16 +13,14 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 public class ErrorResponse {
-    private List<FieldError> fieldErrors; // (1)
+    private List<FieldError> fieldErrors;
     private List<ConstraintViolationError> violationErrors;
 
 
-    //  BindingResult에 대한 ErrorResponse 객체 생성
     public static ErrorResponse of(BindingResult bindingResult) {
         return new ErrorResponse(FieldError.of(bindingResult),null);
     }
 
-    //  Set<ConstraintViolation<?>> 객체에 대한 ErrorResponse 객체 생성
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations) {
         return new ErrorResponse(null, ConstraintViolationError.of(violations));
     }
@@ -53,7 +51,6 @@ public class ErrorResponse {
         private String propertyPath;
         private Object  rejectedValue;
         private String reason;
-
 
         public static List<ConstraintViolationError> of(
                 Set<ConstraintViolation<?>> constraintViolations) {

@@ -3,11 +3,18 @@ package com.sns.member.domain.entity;
 import com.sns.common.BaseEntity;
 import lombok.*;
 
-@Getter
-@Setter
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member extends BaseEntity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
     private String name;
     private String email;

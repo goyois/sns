@@ -35,6 +35,7 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
+//        final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
         return new ResponseEntity<>(HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 }

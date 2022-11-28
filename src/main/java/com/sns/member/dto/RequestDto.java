@@ -1,5 +1,6 @@
 package com.sns.member.dto;
 
+import com.sns.member.domain.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,5 +37,6 @@ public class RequestDto {
         private String birthday;
         private String address;
         private String profileImage;
+        private Member.MemberStatus memberStatus;
     }
 }

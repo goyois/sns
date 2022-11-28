@@ -45,6 +45,9 @@ public class MemberService {
     }
 
     public void deleteMember(long memberId) {
+        Member findMember = findVerifiedMember(memberId); {
+            memberRepository.delete(findMember);
+        }
     }
 
     public Member findVerifiedMember(long memberId) {

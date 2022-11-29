@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity(name = "members")
+@Entity
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,11 +17,8 @@ public class Member extends BaseEntity {
     @Column(nullable = false, updatable = false, unique = true)
     private String email;
     private String password;
-    @Column(length = 30, nullable = false)
     private String name;
-    @Column(length = 50, nullable = false, unique = true)
     private String nickname;
-    @Column(length = 13, nullable = false, unique = true)
     private String phone;
     private String address;
     private String birthday;
@@ -32,7 +29,7 @@ public class Member extends BaseEntity {
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
 
-    //    @Builder
+        @Builder
     public Member(String name, String email, String password, String nickname, String phone, String address, String birthday, String profileImage, String role) {
         this.name = name;
         this.email = email;

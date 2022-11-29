@@ -5,16 +5,16 @@ import com.sns.common.exception.ExceptionCode;
 import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.criteria.internal.BasicPathUsageException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+    private final MemberRepository memberRepository;
 
-    private MemberRepository memberRepository;
 
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
@@ -26,16 +26,12 @@ public class MemberService {
 
         Optional.ofNullable(member.getName())
                 .ifPresent(name -> findMember.setName(name));
-        Optional.ofNullable(member.getNickname())
-                .ifPresent(nickName -> findMember.setNickname(nickName));
         Optional.ofNullable(member.getPassword())
                 .ifPresent(password -> findMember.setPassword(password));
         Optional.ofNullable(member.getPhone())
                 .ifPresent(phone -> findMember.setPhone(phone));
         Optional.ofNullable(member.getAddress())
                 .ifPresent(address -> findMember.setAddress(address));
-        Optional.ofNullable(member.getBirthday())
-                .ifPresent(birthday -> findMember.setBirthday(birthday));
 
         return memberRepository.save(findMember);
     }
@@ -45,16 +41,17 @@ public class MemberService {
     }
 
     public void deleteMember(long memberId) {
-        Member findMember = findVerifiedMember(memberId); {
+        Member findMember = findVerifiedMember(memberId);
             memberRepository.delete(findMember);
-        }
     }
 
     public Member findVerifiedMember(long memberId) {
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        Member member = optionalMember.orElseThrow(() ->
+        Optional<Member> optionalMember =
+                memberRepository.findById(memberId);
+        Member findMember =
+                optionalMember.orElseThrow(() ->
                         new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return member;
+        return findMember;
     }
 
     private void verifyExistsEmail(String email) {

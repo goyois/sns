@@ -16,6 +16,8 @@ public class ResponseDto {
         private String email;
         private String phone;
         private String address;
+        private String nickname;
+        private String birthday;
         private String profileImage;
         private String role;
         private Member.MemberStatus memberStatus;

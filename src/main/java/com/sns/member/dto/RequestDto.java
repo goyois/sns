@@ -23,7 +23,10 @@ public class RequestDto {
         @Pattern(regexp = "^010-\\d{3,4}-\\d{4}$",
                 message = "휴대폰번호는 형식에 맞추어 11자리와 -를 포함시켜야합니다.")
         private String phone;
+        private String nickname;
         private String address;
+        private String birthday;
+        private String profileImage;
     }
 
     @Getter @Setter

@@ -1,6 +1,7 @@
 package com.sns.post.entity;
 
 import com.sns.common.BaseEntity;
+import com.sns.member.entity.Member;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,9 @@ public class Post extends BaseEntity {
     private String content;
 
     //멤버와 연관관계 매핑 필요
+    @ManyToOne
+    @JoinColumn("member_email")
+    private Member member;
+
+
 }

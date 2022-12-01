@@ -16,7 +16,7 @@ import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/posts") //로그인 시 아이디 넣기
+@RequestMapping("/v1/posts/{email}") //로그인 시 아이디 넣기
 @Validated
 @Slf4j
 public class PostController {
@@ -32,16 +32,30 @@ public class PostController {
     }
 
     //Todo 인증 토큰받은 email 확인 추가하기
-    @PostMapping
-    public ResponseEntity postPost(@RequestBody PostDto.Post requestBody) {
+    @PostMapping("")
+    public ResponseEntity postPost( @PathVariable("email") String email, @RequestBody PostDto.Post requestBody) {
 
         Post post = postMapper.postPostToPost(requestBody);
-        Post createPost = postService.createPost(post);
+        Post createPost = postService.createPost(email, post);
         PostDto.Response response = postMapper.postToPostResponse(createPost);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response),
                 HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity patchPost( @PathVariable("email") String email,
+                                     @PathVariable("id") @Positive Long id,
+                                     @RequestBody PostDto.Patch requestBody) {
+
+        Post post = postMapper.postPatchToPost(requestBody);
+        Post updatePost = postService.updatePost(email, post);
+        PostDto.Response response = postMapper.postToPostResponse(updatePost);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response),
+                HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

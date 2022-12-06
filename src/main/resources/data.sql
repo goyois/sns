@@ -1,2 +1,0 @@
---INSERT INTO members (id, email, password, name, nickname, address, birthday, profileImage)
---VALUES (1, komi3391@gmail.com, 1234, 김주원, kim, 의정부시, 12월8일,프사);

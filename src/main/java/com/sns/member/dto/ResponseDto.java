@@ -1,10 +1,7 @@
 package com.sns.member.dto;
 
 import com.sns.member.domain.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +9,7 @@ import java.util.List;
 public class ResponseDto {
     @Getter @Setter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Response {
         private long memberId;
         private String name;
@@ -22,9 +20,21 @@ public class ResponseDto {
         private String nickname;
         private String birthday;
         private Integer age;
-        private String role;
         private List<Member> members = new ArrayList<>();
         private Member.MemberStatus memberStatus;
+    }
 
+
+    //추가사항 - 전체 내용 필요없어서 게시물 등록할 때 메일하고 멤버 아이디만 보내는 거 추가
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Response1 {
+
+        private long memberId;
+        private String email;
     }
 }
+

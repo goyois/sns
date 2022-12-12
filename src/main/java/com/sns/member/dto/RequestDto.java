@@ -3,16 +3,17 @@ package com.sns.member.dto;
 import com.sns.member.domain.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 public class RequestDto {
-    @Getter
+    @Getter @Setter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Post {
         @NotBlank(message = "공백은 포함될 수 없습니다.")
         private String name;
@@ -28,11 +29,12 @@ public class RequestDto {
         private String address;
         private String birthday;
         private Integer age;
-
+        private String profileImage;
     }
 
     @Getter @Setter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Patch {
         private long memberId;
         private String name;
@@ -42,6 +44,8 @@ public class RequestDto {
         private String birthday;
         private Integer age;
         private String address;
+        private String profileImage;
         private Member.MemberStatus memberStatus;
     }
 }
+

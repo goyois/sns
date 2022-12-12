@@ -5,8 +5,6 @@ import lombok.*;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -20,17 +18,29 @@ public class Member extends BaseEntity {
     private String email;
     private String password;
     private String name;
-    private Integer age;
     private String nickname;
     private String phone;
     private String address;
     private String birthday;
     private String role;
+    private String profileImage;
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
 
+    @Builder
+    public Member(String name, String email, String password, String nickname, String phone, String address, String birthday, String profileImage, String role) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.phone = phone;
+        this.address = address;
+        this.birthday = birthday;
+        this.profileImage = profileImage;
+        this.role = role;
+    }
 
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),
@@ -44,11 +54,4 @@ public class Member extends BaseEntity {
             this.memberStatus = memberStatus;
         }
     }
-
-    public Member(String nickname, Integer age, String role) {
-        this.nickname = nickname;
-        this.age = age;
-        this.role = role;
-    }
 }
-

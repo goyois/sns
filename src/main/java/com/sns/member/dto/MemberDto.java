@@ -22,12 +22,12 @@ public class MemberDto {
     private String phone;
     private String address;
     private String birthday;
-    private String role;
+
 
 
 
     @QueryProjection
-    public MemberDto(long memberId, String email, String password, String name, Integer age, String nickname, String phone, String address, String birthday, String role) {
+    public MemberDto(long memberId, String email, String password, String name, Integer age, String nickname, String phone, String address, String birthday) {
         this.memberId = memberId;
         this.email = email;
         this.password = password;
@@ -37,7 +37,7 @@ public class MemberDto {
         this.phone = phone;
         this.address = address;
         this.birthday = birthday;
-        this.role = role;
+
 
     }
 }

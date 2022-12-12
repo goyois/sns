@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 public class RequestDto {
     @Getter
@@ -26,7 +27,8 @@ public class RequestDto {
         private String nickname;
         private String address;
         private String birthday;
-        private String profileImage;
+        private Integer age;
+
     }
 
     @Getter @Setter
@@ -38,8 +40,8 @@ public class RequestDto {
         private String email;
         private String nickname;
         private String birthday;
+        private Integer age;
         private String address;
-        private String profileImage;
         private Member.MemberStatus memberStatus;
     }
 }

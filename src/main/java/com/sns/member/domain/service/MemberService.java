@@ -5,6 +5,9 @@ import com.sns.common.exception.ExceptionCode;
 import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +43,12 @@ public class MemberService {
     public Member findMember(long memberId) {
         return findVerifiedMember(memberId);
     }
+
+    public Page<Member> findMembers(int page, int size) {
+        return memberRepository.findAll(PageRequest.of(page, size,
+                Sort.by("memberId").descending()));
+    }
+
 
     public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);

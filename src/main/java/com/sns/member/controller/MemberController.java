@@ -1,5 +1,6 @@
 package com.sns.member.controller;
 
+import com.sns.common.dto.MultiResponseDto;
 import com.sns.common.dto.SingleResponseDto;
 import com.sns.member.dto.RequestDto;
 import com.sns.member.domain.entity.Member;
@@ -7,6 +8,8 @@ import com.sns.member.mapper.MemberMapper;
 import com.sns.member.domain.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
 @Validated
-@Slf4j
 public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
@@ -27,8 +30,7 @@ public class MemberController {
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody RequestDto.Post post) {
         Member member = memberService.createMember(mapper.postToMember(post));
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.CREATED);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.CREATED);
     }
 
     @PatchMapping("/{member-id}")
@@ -45,9 +47,22 @@ public class MemberController {
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.OK);
     }
 
+    @GetMapping("/")
+    public ResponseEntity getMembers(@Positive @RequestParam int page,
+                                     @Positive @RequestParam int size) {
+        Page<Member> pageMembers = memberService.findMembers(page - 1, size);
+        List<Member> members = pageMembers.getContent();
+        return new ResponseEntity<>(new MultiResponseDto<>(mapper.MembersToResponse(members),pageMembers),HttpStatus.OK);
+     }
+
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
         memberService.deleteMember(memberId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello";
     }
 }

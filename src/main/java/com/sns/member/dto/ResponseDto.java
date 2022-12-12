@@ -4,10 +4,13 @@ import com.sns.member.domain.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseDto {
-    @Builder
-    @Getter
+    @Getter @Setter
     @AllArgsConstructor
     public static class Response {
         private long memberId;
@@ -18,8 +21,9 @@ public class ResponseDto {
         private String address;
         private String nickname;
         private String birthday;
-        private String profileImage;
+        private Integer age;
         private String role;
+        private List<Member> members = new ArrayList<>();
         private Member.MemberStatus memberStatus;
 
     }

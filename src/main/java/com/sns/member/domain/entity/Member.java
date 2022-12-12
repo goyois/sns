@@ -1,10 +1,13 @@
 package com.sns.member.domain.entity;
 
 import com.sns.common.BaseEntity;
+import com.sns.post.entity.Post;
 import lombok.*;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -24,6 +27,11 @@ public class Member extends BaseEntity {
     private String birthday;
     private String profileImage;
     private String role;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
+
+
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;

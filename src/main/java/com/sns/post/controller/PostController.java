@@ -1,5 +1,9 @@
 package com.sns.post.controller;
 
+import com.sns.comment.dto.CommentDto;
+import com.sns.comment.entity.Comment;
+import com.sns.comment.mapper.CommentMapper;
+import com.sns.comment.service.CommentService;
 import com.sns.common.dto.SingleResponseDto;
 import com.sns.post.dto.PostDto;
 import com.sns.post.entity.Post;
@@ -21,19 +25,37 @@ import java.util.List;
 @Slf4j
 public class PostController {
 
+    //    private final PostService postService;
+//    private final PostMapper postMapper;
+//
+//    //Todo member 받아오기 - 게시글은 로그인 시에만 작성가능
+//
+//    public PostController(PostService postService, PostMapper postMapper){
+//        this.postService = postService;
+//        this.postMapper = postMapper;
+//    }
     private final PostService postService;
     private final PostMapper postMapper;
+    private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
     //Todo member 받아오기 - 게시글은 로그인 시에만 작성가능
 
-    public PostController(PostService postService, PostMapper postMapper){
+    public PostController(PostService postService, PostMapper postMapper, CommentService commentService, CommentMapper commentMapper) {
         this.postService = postService;
         this.postMapper = postMapper;
+        this.commentService = commentService;
+        this.commentMapper = commentMapper;
+
     }
+
+    /**
+     * 게시물 등록
+     */
 
     //Todo 인증 토큰받은 email 확인 추가하기
     @PostMapping("")
-    public ResponseEntity postPost( @PathVariable("email") String email, @RequestBody PostDto.Post requestBody) {
+    public ResponseEntity postPost(@PathVariable String email, @RequestBody PostDto.Post requestBody) {
 
         Post post = postMapper.postPostToPost(requestBody);
         Post createPost = postService.createPost(email, post);
@@ -44,10 +66,14 @@ public class PostController {
                 HttpStatus.CREATED);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity patchPost( @PathVariable("email") String email,
-                                     @PathVariable("id") @Positive Long id,
-                                     @RequestBody PostDto.Patch requestBody) {
+    /**
+     * 게시물 수정
+     */
+
+    @PatchMapping("/{post-id}")
+    public ResponseEntity patchPost(@PathVariable("email") String email,
+                                    @PathVariable("post-id") @Positive Long postId,
+                                    @RequestBody PostDto.Patch requestBody) {
 
         Post post = postMapper.postPatchToPost(requestBody);
         Post updatePost = postService.updatePost(email, post);
@@ -58,23 +84,38 @@ public class PostController {
                 HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getPost(@PathVariable("id") @Positive Long id) {
+    /**
+     * 게시물 조회
+     */
 
-        Post post = postService.findPost(id);
+    //Todo 전체 게시물 조회 추가하기
+    @GetMapping("/{post-id}")
+    public ResponseEntity getPost(@PathVariable("post-id") @Positive Long postId) {
+
+        Post post = postService.findPost(postId);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(postMapper.postToPostResponse(post)),
                 HttpStatus.OK);
     }
 
+//    @GetMapping("")
+//    public ResponseEntity getPosts(@PathVariable("email") String email) {
+//        List<Post> posts = postService.findPosts(email);
+//
+//        return new ResponseEntity<>(new SingleResponseDto<>(postMapper.postsToPostResponseDto(posts)),HttpStatus.OK);
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deletePost(@PathVariable("id") @Positive Long id) {
+//    }
 
-        postService.deletePost(id);
+    /**
+     * 게시물 삭제
+     */
+
+    @DeleteMapping("/{post-id}")
+    public ResponseEntity deletePost(@PathVariable("post-id") @Positive Long postId) {
+
+        postService.deletePost(postId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

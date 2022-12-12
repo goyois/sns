@@ -2,12 +2,15 @@ package com.sns.post.service;
 
 import com.sns.common.exception.BusinessLogicException;
 import com.sns.common.exception.ExceptionCode;
+import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.repository.MemberRepository;
 import com.sns.post.entity.Post;
 import com.sns.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,8 +26,12 @@ public class PostService {
 
     public Post createPost(String email, Post post) {
 
-        memberRepository.findByEmail(email).orElseThrow(() ->
+        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+
+        post.setMember(member);
+        post.setCreatedAt(LocalDateTime.now());
 
         return postRepository.save(post);
     }
@@ -41,22 +48,32 @@ public class PostService {
 
     }
 
-    public void deletePost(Long id) {
-        Post findPost = findVerifiedPost(id);
+    public void deletePost(Long postId) {
+        Post findPost = findVerifiedPost(postId);
         postRepository.delete(findPost);
     }
 
-    public Post findVerifiedPost(Long id) {
+    public Post findVerifiedPost(Long postId) {
         Optional<Post> optionalPost =
-                postRepository.findById(id);
+                postRepository.findById(postId);
         Post findPost = optionalPost.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         return findPost;
     }
 
-    public Post findPost(Long id) {
-        return findVerifiedPost(id);
+    public Post findPost(Long postId) {
+        return findVerifiedPost(postId);
     }
+
+
+    public Post getPost(Long postId) {
+
+        Post post = findVerifiedPost(postId);
+        postRepository.save(post);
+
+        return postRepository.findByPostId(postId);
+    }
+
 
   }

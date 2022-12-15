@@ -5,7 +5,9 @@ import com.sns.common.dto.MultiResponseDto;
 import com.sns.common.dto.SingleResponseDto;
 import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.service.MemberService;
+import com.sns.member.dto.MemberDto;
 import com.sns.member.dto.RequestDto;
+import com.sns.member.dto.ResponseDto;
 import com.sns.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 
@@ -42,7 +45,8 @@ public class MemberController {
                                       @Valid @RequestBody RequestDto.Patch patch) {
         patch.setMemberId(memberId);
         Member member = memberService.updateMember(mapper.patchToMember(patch));
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.OK);
     }
 
     @GetMapping("/{member-id}")
@@ -51,7 +55,7 @@ public class MemberController {
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity getMembers(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
         Page<Member> pageMembers = memberService.findMembers(page - 1, size);

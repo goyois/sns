@@ -5,6 +5,8 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -28,6 +30,8 @@ public class Member extends BaseEntity {
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
     @Builder
     public Member(String name, String email, String password, String nickname, String phone, String address, String birthday, String profileImage, String role) {

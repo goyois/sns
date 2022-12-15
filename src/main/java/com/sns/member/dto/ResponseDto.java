@@ -12,14 +12,15 @@ public class ResponseDto {
     @NoArgsConstructor
     public static class Response {
         private long memberId;
-        private String name;
-        private String password;
         private String email;
+        private String password;
+        private String name;
         private String phone;
-        private String address;
         private String nickname;
-        private String birthday;
         private Integer age;
+        private String birthday;
+        private String address;
+        private String profileImage;
         private List<Member> members = new ArrayList<>();
         private Member.MemberStatus memberStatus;
     }

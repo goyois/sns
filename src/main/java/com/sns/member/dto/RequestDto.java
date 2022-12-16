@@ -22,7 +22,6 @@ public class RequestDto {
         @NotBlank(message = "비밀번호를 입력해주세요.")
         private String password;
 
-
         @NotBlank(message = "공백은 포함될 수 없습니다.")
         private String name;
 
@@ -41,8 +40,8 @@ public class RequestDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Patch {
-
         private long memberId;
+
         @NotBlank
         @Email
         private String email;
@@ -65,8 +64,9 @@ public class RequestDto {
         private String profileImage;
         private Member.MemberStatus memberStatus;
 
-
-
+        public Patch(Long memberId) {
+            this.memberId = memberId;
+        }
     }
 }
 

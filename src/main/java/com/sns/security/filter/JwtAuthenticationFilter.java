@@ -1,9 +1,10 @@
 package com.sns.security.filter;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sns.security.config.LoginDto;
 import com.sns.member.domain.entity.Member;
-import com.sns.security.auth.JwtTokenizer;
-import com.sns.security.dao.LoginDao;
+import com.sns.security.token.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
         ObjectMapper objectMapper = new ObjectMapper();  //3-1 역직렬화를 위한 오브젝트매퍼 인스턴스 생성
-        LoginDao loginDto = objectMapper.readValue(request.getInputStream(), LoginDao.class); //3-2
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(),LoginDto.class); //3-2
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(),loginDto.getPassword());  //3-3

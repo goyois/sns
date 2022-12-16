@@ -1,12 +1,10 @@
-package com.sns.security.auth;
-
+package com.sns.security.config;
 
 
 import com.sns.common.exception.BusinessLogicException;
 import com.sns.common.exception.ExceptionCode;
 import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.repository.MemberRepository;
-import com.sns.security.config.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

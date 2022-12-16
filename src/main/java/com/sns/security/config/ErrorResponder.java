@@ -1,6 +1,5 @@
 package com.sns.security.config;
 
-
 import com.google.gson.Gson;
 import com.sns.common.advice.ErrorResponse;
 import org.springframework.http.HttpStatus;

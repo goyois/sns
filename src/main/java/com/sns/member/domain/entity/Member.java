@@ -16,7 +16,6 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
-    @Column(nullable = false, updatable = false, unique = true)
     private String email;
     private String password;
     private String name;
@@ -24,7 +23,6 @@ public class Member extends BaseEntity {
     private String phone;
     private String address;
     private String birthday;
-    private String role;
     private String profileImage;
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
@@ -33,8 +31,7 @@ public class Member extends BaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @Builder
-    public Member(String name, String email, String password, String nickname, String phone, String address, String birthday, String profileImage, String role) {
+    public Member(String name, String email, String password, String nickname, String phone, String address, String birthday, String profileImage) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -43,7 +40,6 @@ public class Member extends BaseEntity {
         this.address = address;
         this.birthday = birthday;
         this.profileImage = profileImage;
-        this.role = role;
     }
 
     public enum MemberStatus {

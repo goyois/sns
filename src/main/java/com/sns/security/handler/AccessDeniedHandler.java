@@ -1,6 +1,6 @@
 package com.sns.security.handler;
 
-import com.sns.security.config.ErrorResponder;
+import com.sns.security.auth.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

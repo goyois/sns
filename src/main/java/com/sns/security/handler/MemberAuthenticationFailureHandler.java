@@ -1,7 +1,6 @@
 package com.sns.security.handler;
 
 
-
 import com.google.gson.Gson;
 import com.sns.common.advice.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;

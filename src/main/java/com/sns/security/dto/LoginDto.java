@@ -1,4 +1,4 @@
-package com.sns.security.config;
+package com.sns.security.dto;
 
 import lombok.Getter;
 

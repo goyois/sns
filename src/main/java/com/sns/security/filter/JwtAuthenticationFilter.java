@@ -2,9 +2,9 @@ package com.sns.security.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sns.security.config.LoginDto;
 import com.sns.member.domain.entity.Member;
-import com.sns.security.token.JwtTokenizer;
+import com.sns.security.dto.LoginDto;
+import com.sns.security.jwt.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;

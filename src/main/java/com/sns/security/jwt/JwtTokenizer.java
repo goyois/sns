@@ -1,4 +1,4 @@
-package com.sns.security.token;
+package com.sns.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

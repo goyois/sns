@@ -1,6 +1,6 @@
 package com.sns.member.domain.service;
 
-import com.sns.security.config.CustomAuthorityUtils;
+import com.sns.security.auth.CustomAuthorityUtils;
 import com.sns.common.exception.BusinessLogicException;
 import com.sns.common.exception.ExceptionCode;
 import com.sns.member.domain.entity.Member;

@@ -31,16 +31,6 @@ public class Member extends BaseEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    public Member(String name, String email, String password, String nickname, String phone, String address, String birthday, String profileImage) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.phone = phone;
-        this.address = address;
-        this.birthday = birthday;
-        this.profileImage = profileImage;
-    }
 
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),

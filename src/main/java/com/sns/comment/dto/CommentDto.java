@@ -1,6 +1,5 @@
 package com.sns.comment.dto;
 
-import com.sns.member.dto.ResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +34,7 @@ public class CommentDto {
 
         private Long commentId;
         private String comment;
-        private ResponseDto.Response1 member;
+        //private ResponseDto.Response1 member;
 
 
     }

@@ -1,6 +1,5 @@
 package com.sns.comment.entity;
 
-import com.sns.common.BaseEntity;
 import com.sns.member.domain.entity.Member;
 import com.sns.post.entity.Post;
 import lombok.*;

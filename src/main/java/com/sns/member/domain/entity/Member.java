@@ -1,7 +1,6 @@
 package com.sns.member.domain.entity;
 
 import com.sns.common.BaseEntity;
-import com.sns.post.entity.Post;
 import lombok.*;
 
 
@@ -17,7 +16,6 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
-    @Column(nullable = false, updatable = false, unique = true)
     private String email;
     private String password;
     private String name;
@@ -26,29 +24,13 @@ public class Member extends BaseEntity {
     private String address;
     private String birthday;
     private String profileImage;
-    private String role;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
-
-
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
-        @Builder
-    public Member(String name, String email, String password, String nickname, String phone, String address, String birthday, String profileImage, String role) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.phone = phone;
-        this.address = address;
-        this.birthday = birthday;
-        this.profileImage = profileImage;
-        this.role = role;
-    }
 
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),

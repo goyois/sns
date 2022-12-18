@@ -1,27 +1,28 @@
 package com.sns.member.dto;
 
 import com.sns.member.domain.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseDto {
-    @Builder
-    @Getter
+    @Getter @Setter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Response {
         private long memberId;
-        private String name;
-        private String password;
         private String email;
+        private String password;
+        private String name;
         private String phone;
-        private String address;
         private String nickname;
+        private Integer age;
         private String birthday;
+        private String address;
         private String profileImage;
-        private String role;
+        private List<Member> members = new ArrayList<>();
         private Member.MemberStatus memberStatus;
-
     }
 
 
@@ -30,9 +31,11 @@ public class ResponseDto {
     @Builder
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Response1 {
 
         private long memberId;
         private String email;
     }
 }
+

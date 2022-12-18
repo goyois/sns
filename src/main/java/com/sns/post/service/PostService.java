@@ -6,11 +6,9 @@ import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.repository.MemberRepository;
 import com.sns.post.entity.Post;
 import com.sns.post.repository.PostRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service

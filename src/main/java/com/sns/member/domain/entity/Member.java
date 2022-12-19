@@ -1,6 +1,8 @@
 package com.sns.member.domain.entity;
 
+import com.sns.comment.entity.Comment;
 import com.sns.common.BaseEntity;
+import com.sns.post.entity.Post;
 import lombok.*;
 
 
@@ -12,8 +14,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 public class Member extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
     private String email;
     private String password;
@@ -28,7 +29,10 @@ public class Member extends BaseEntity {
     private StatusRecode statusRecode;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
-
+    @OneToMany(mappedBy = "member")
+    private List<Post> post = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<Comment> comments = new ArrayList<>();
 
     public enum StatusRecode {
         SUCCESS("정상적으로 회원가입되었습니다."),

@@ -12,17 +12,15 @@ public class MemberConditionDto {
     private String phone;
     private String birthday;
     private Integer age;
-    private Member.MemberStatus memberStatus;
+    private Member.StatusRecode statusRecode;
 
 
     @QueryProjection
-    public MemberConditionDto(String email, String name, String phone, String birthday, Integer age, Member.MemberStatus memberStatus) {
+    public MemberConditionDto(String email, String name, String phone, String birthday, Integer age) {
         this.email = email;
         this.name = name;
         this.phone = phone;
         this.birthday = birthday;
-
         this.age = age;
-        this.memberStatus = memberStatus;
     }
 }

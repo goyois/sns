@@ -1,6 +1,6 @@
 package com.sns.member.domain.service;
 
-import com.sns.security.auth.CustomAuthorityUtils;
+import com.sns.security.utils.CustomAuthorityUtils;
 import com.sns.common.exception.BusinessLogicException;
 import com.sns.common.exception.ExceptionCode;
 import com.sns.member.domain.entity.Member;
@@ -37,6 +37,7 @@ public class MemberService {
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
+        Member.StatusRecode recode = Member.StatusRecode.SUCCESS;
         Member savedMember = memberRepository.save(member);
         return savedMember;
     }
@@ -54,6 +55,7 @@ public class MemberService {
         Optional.ofNullable(member.getAddress())
                 .ifPresent(address -> findMember.setAddress(address));
 
+        Member.StatusRecode recode = Member.StatusRecode.UPDATE;
         return memberRepository.save(findMember);
     }
 
@@ -70,6 +72,7 @@ public class MemberService {
 
     public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
+        Member.StatusRecode recode = Member.StatusRecode.DELETE;
         memberRepository.delete(findMember);
     }
 

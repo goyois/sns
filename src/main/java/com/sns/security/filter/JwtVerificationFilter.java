@@ -1,6 +1,6 @@
 package com.sns.security.filter;
 
-import com.sns.security.auth.CustomAuthorityUtils;
+import com.sns.security.utils.CustomAuthorityUtils;
 import com.sns.security.jwt.JwtTokenizer;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;

@@ -1,6 +1,5 @@
-package com.sns.security.auth;
+package com.sns.security.utils;
 
-import com.sns.security.auth.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

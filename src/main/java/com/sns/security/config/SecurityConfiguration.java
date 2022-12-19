@@ -1,7 +1,7 @@
 package com.sns.security.config;
 
-import com.sns.security.auth.CustomAuthorityUtils;
-import com.sns.security.auth.MemberAuthenticationEntryPoint;
+import com.sns.security.utils.CustomAuthorityUtils;
+import com.sns.security.utils.MemberAuthenticationEntryPoint;
 import com.sns.security.filter.JwtAuthenticationFilter;
 import com.sns.security.filter.JwtVerificationFilter;
 import com.sns.security.handler.MemberAccessDeniedHandler;
@@ -54,11 +54,20 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/*/members").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER") //** = member 하위 전부 허용
+                        .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER","ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-                        // 커피,주문 권한도 설정해보자
+                        .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER") //
+                        .antMatchers(HttpMethod.POST, "/*/post").hasAnyRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/*/post/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/*/post/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.GET, "/*/post").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/*/post").hasAnyRole("USER","ADMIN")
+                        .antMatchers(HttpMethod.POST, "/*/comment").hasAnyRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/*/comment/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/*/comment/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.GET, "/*/comment").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/*/comment").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll());
         return http.build();
     }
@@ -84,7 +93,7 @@ public class SecurityConfiguration {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,jwtTokenizer);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/v11/auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());  //성공 핸들러메시지
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());  //실패 핸들러메시지
 

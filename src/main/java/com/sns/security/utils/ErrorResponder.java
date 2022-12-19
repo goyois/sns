@@ -1,4 +1,4 @@
-package com.sns.security.auth;
+package com.sns.security.utils;
 
 import com.google.gson.Gson;
 import com.sns.common.advice.ErrorResponse;

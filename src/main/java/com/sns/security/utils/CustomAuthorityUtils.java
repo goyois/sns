@@ -1,4 +1,4 @@
-package com.sns.security.auth;
+package com.sns.security.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;

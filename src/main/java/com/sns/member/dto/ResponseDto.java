@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseDto {
-    @Getter @Setter
+    @Getter
     @AllArgsConstructor
-    @NoArgsConstructor
     public static class Response {
         private long memberId;
         private String email;
@@ -22,7 +21,7 @@ public class ResponseDto {
         private String address;
         private String profileImage;
         private List<Member> members = new ArrayList<>();
-        private Member.MemberStatus memberStatus;
+        private Member.StatusRecode statusRecode;
     }
 
 

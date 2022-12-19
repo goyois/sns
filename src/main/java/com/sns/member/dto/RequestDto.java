@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
 public class RequestDto {
     @Getter
     @AllArgsConstructor
-    @NoArgsConstructor
+
     public static class Post {
         @NotBlank
         @Email
@@ -40,7 +40,6 @@ public class RequestDto {
 
     @Getter @Setter
     @AllArgsConstructor
-    @NoArgsConstructor
     public static class Patch {
         private long memberId;
 
@@ -64,11 +63,8 @@ public class RequestDto {
         private String birthday;
         private String address;
         private String profileImage;
-        private Member.MemberStatus memberStatus;
+        private Member.StatusRecode statusRecode;
 
-        public Patch(Long memberId) {
-            this.memberId = memberId;
-        }
     }
 }
 

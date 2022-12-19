@@ -8,9 +8,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "members")
 @Getter @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Member extends BaseEntity {
     @Id
@@ -26,21 +25,20 @@ public class Member extends BaseEntity {
     private String profileImage;
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
-
+    private StatusRecode statusRecode;
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
 
-    public enum MemberStatus {
-        MEMBER_ACTIVE("활동중"),
-        MEMBER_SLEEP("휴면 상태"),
-        MEMBER_QUIT("탈퇴 상태");
+    public enum StatusRecode {
+        SUCCESS("정상적으로 회원가입되었습니다."),
+        UPDATE("입력정보가 수정되었습니다."),
+        DELETE("더 이상 회원이 아닙니다.");
 
         @Getter
         private String memberStatus;
 
-        MemberStatus(String memberStatus) {
+        StatusRecode(String memberStatus) {
             this.memberStatus = memberStatus;
         }
     }

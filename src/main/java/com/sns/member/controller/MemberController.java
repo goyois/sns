@@ -16,12 +16,14 @@ import org.springframework.data.domain.Page;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+
 import java.util.List;
 
 
@@ -34,15 +36,17 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
 
+
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody RequestDto.Post post) {
         Member member = memberService.createMember(mapper.postToMember(post));
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.CREATED);
     }
 
+
     @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
-                                      @Valid @RequestBody RequestDto.Patch patch) {
+    public ResponseEntity patchMember(@PathVariable("member-id")long memberId, @AuthenticationPrincipal
+                                      @Valid @RequestBody RequestDto.Patch patch){
         patch.setMemberId(memberId);
         Member member = memberService.updateMember(mapper.patchToMember(patch));
         return new ResponseEntity<>(

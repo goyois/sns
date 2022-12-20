@@ -5,6 +5,7 @@ import com.sns.comment.entity.Comment;
 import com.sns.comment.mapper.CommentMapper;
 import com.sns.comment.service.CommentService;
 import com.sns.common.dto.SingleResponseDto;
+import com.sns.post.dto.PostDto;
 import com.sns.post.entity.Post;
 import com.sns.post.mapper.PostMapper;
 import com.sns.post.repository.PostRepository;
@@ -15,7 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/v1/posts/{email}") //로그인 시 아이디 넣기
@@ -52,14 +55,27 @@ public class CommentController {
                     HttpStatus.CREATED);
 
         }
-
-//        @DeleteMapping("{post-id}/comments/{comment-id}")
-//        public ResponseEntity deleteComment(@PathVariable("email") String email, @PathVariable("post-id") Long postId, @PathVariable("comment-id") Long commentId)
-//        {
-//            commentService.delecteComment(commentId, postId, email);
+//            @PatchMapping("{post-id}/comments/update")
+//        public ResponseEntity commentPatch(@PathVariable("post-id") Long postId, @RequestBody CommentDto.Patch requestBody, Principal principal) {
+//
+//
+//            Comment comment = commentService.updateComment(commentMapper.commentPatchToPost(requestBody), postId, principal);
+//
+//            CommentDto.Response response = commentMapper.commentToPostResponse(comment);
+//
 //            return new ResponseEntity<>(
 //                    new SingleResponseDto<>(response),
 //                    HttpStatus.OK);
 //        }
+
+
+
+        @DeleteMapping("{post-id}/comments/{comment-id}")
+        public ResponseEntity deleteComment(@PathVariable("post-id") Long postId, @PathVariable("comment-id") Long commentId, Principal principal)
+        {
+            commentService.deleteComment(commentId, postId, principal);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); //204
+        }
 
 }

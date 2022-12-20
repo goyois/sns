@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseDto {
+//    @Builder
     @Getter @Setter
     @AllArgsConstructor
     @NoArgsConstructor

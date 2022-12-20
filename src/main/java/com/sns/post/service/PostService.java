@@ -6,13 +6,17 @@ import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.repository.MemberRepository;
 import com.sns.post.entity.Post;
 import com.sns.post.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class PostService {
+public class   PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
@@ -73,5 +77,11 @@ public class PostService {
         return postRepository.findByPostId(postId);
     }
 
+    public Page<Post> getPostList(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page - 1, size,
+                Sort.by("postId").descending());
+        return postRepository.findAll(pageable);
+    }
 
   }

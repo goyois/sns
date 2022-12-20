@@ -24,6 +24,7 @@ public class Member extends BaseEntity {
     private String address;
     private String birthday;
     private String profileImage;
+
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;

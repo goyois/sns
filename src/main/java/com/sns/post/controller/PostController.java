@@ -82,7 +82,7 @@ public class PostController {
     }
 
     /**
-     * 게시물 조회
+     * 전체 게시물 조회
      */
 
     //Todo 전체 게시물 조회 추가하기
@@ -100,7 +100,9 @@ public class PostController {
     }
 
 
-
+    /**
+     * 게시물 조회
+     */
 
     @GetMapping("/{post-id}")
     public ResponseEntity getPost(@PathVariable("post-id") @Positive Long postId) {

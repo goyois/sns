@@ -1,4 +1,4 @@
-package com.sns.security.detail_service;
+package com.sns.security.userdetail;
 
 
 import com.sns.common.exception.BusinessLogicException;

@@ -37,10 +37,10 @@ public class MemberService {
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);
 
-        Member.StatusRecode recode = Member.StatusRecode.SUCCESS;
         Member savedMember = memberRepository.save(member);
         return savedMember;
     }
+
 
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
@@ -55,7 +55,6 @@ public class MemberService {
         Optional.ofNullable(member.getAddress())
                 .ifPresent(address -> findMember.setAddress(address));
 
-        Member.StatusRecode recode = Member.StatusRecode.UPDATE;
         return memberRepository.save(findMember);
     }
 
@@ -72,7 +71,7 @@ public class MemberService {
 
     public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
-        Member.StatusRecode recode = Member.StatusRecode.DELETE;
+
         memberRepository.delete(findMember);
     }
 

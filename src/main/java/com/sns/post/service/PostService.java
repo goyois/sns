@@ -12,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -66,6 +68,13 @@ public class   PostService {
 
     public Post findPost(Long postId) {
         return findVerifiedPost(postId);
+    }
+
+    public void verifyUserConfirm(Post post, Principal principal) {
+
+        if (!Objects.equals(principal.getName(), post.getMember().getEmail())) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
+        }
     }
 
 

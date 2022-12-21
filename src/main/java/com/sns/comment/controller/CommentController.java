@@ -39,12 +39,26 @@ public class CommentController {
     }
 
 
+    // @PostMapping("/{post-id}/comments")
+    //    public ResponseEntity postComment(@PathVariable("post-id") Long postId,
+    //                                     @Valid @RequestBody CommentDto.Post requestBody,
+    //                                     Principal principal) {
+    //
+    //        Post post = questionRepository.findByQuestionId(questionId);
+    //
+    //        Comment comment = commentService.createComment(commentMapper.commentPostToPost(requestBody, post), postId, principal);
+    //
+    //        CommentDto.Response response = commentMapper.commentToPostResponse(comment);
+    //
+    //        return new ResponseEntity<>(SingleResponseDto<>(response), HttpStatus.CREATED);
+    //    }
+
         @PostMapping("{post-id}/comments")
         public ResponseEntity commentPost(@PathVariable("email") String email, @PathVariable("post-id") Long postId, @RequestBody CommentDto.Post requestBody) {
 
             Post post = postRepository.findByPostId(postId);
 
-            Comment comment = commentService.createComment(email,postId, commentMapper.commentPostToPost(requestBody, post));
+            Comment comment = commentService.createComment(email, postId, commentMapper.commentPostToPost(requestBody, post));
 
 //            Comment comment = commentMapper.commentPostToPost(requestBody, post);
 //            Comment createPost = commentService.createComment(email, postId, comment);
@@ -55,18 +69,31 @@ public class CommentController {
                     HttpStatus.CREATED);
 
         }
-//            @PatchMapping("{post-id}/comments/update")
-//        public ResponseEntity commentPatch(@PathVariable("post-id") Long postId, @RequestBody CommentDto.Patch requestBody, Principal principal) {
-//
-//
-//            Comment comment = commentService.updateComment(commentMapper.commentPatchToPost(requestBody), postId, principal);
-//
-//            CommentDto.Response response = commentMapper.commentToPostResponse(comment);
-//
-//            return new ResponseEntity<>(
-//                    new SingleResponseDto<>(response),
-//                    HttpStatus.OK);
-//        }
+        @PatchMapping("{post-id}/comments/update")
+        public ResponseEntity commentPatch(@PathVariable("post-id") Long postId , @RequestBody CommentDto.Patch requestBody, Principal principal) {
+
+
+            Comment comment = commentService.updateComment(commentMapper.commentPatchToPost(requestBody), postId, principal);
+
+            CommentDto.Response response = commentMapper.commentToPostResponse(comment);
+
+            return new ResponseEntity<>(
+                    new SingleResponseDto<>(response),
+                    HttpStatus.OK);
+        }
+
+        @GetMapping("{post-id}/comments/{comment-id}")
+
+        public ResponseEntity getComment(@PathVariable("post-id") @Positive Long postId, @PathVariable("comment-id") @Positive Long commentId) {
+
+            Post post = postRepository.findByPostId(postId);
+            Comment comment = commentService.getComment(commentId);
+
+            return new ResponseEntity<>(
+                    new SingleResponseDto<>(commentMapper.commentToPostResponse(comment)),
+                    HttpStatus.OK);
+
+        }
 
 
 

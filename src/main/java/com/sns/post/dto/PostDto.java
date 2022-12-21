@@ -35,6 +35,7 @@ public class PostDto {
 
         private String title;
         private String content;
+        private Long postId;
         private ResponseDto.Response1 member;
 
         private LocalDateTime createdAt;

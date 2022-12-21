@@ -48,18 +48,19 @@ public class CommentService {
     }
 
 
-//    public Comment updateComment(Comment comment,Long postId, Principal principal) {
-//
-//        Post post = postService.getPost(postId);
-//        Comment findComment = commentRepository.findById(comment.getCommentId()).get();
-//
-//        verifyUserConfirm(findComment, principal);
-//
-//        findComment.setComment(comment.getComment());
-//
-//        Comment saved = commentRepository.save(findComment);
-//        return saved;
-//    }
+    public Comment updateComment(Comment comment, Long postId, Principal principal) {
+
+        Post post = postService.getPost(postId);
+        Comment findComment = commentRepository.findById(comment.getCommentId()).get();
+
+        verifyUserConfirm(findComment, principal);
+
+        findComment.setComment(comment.getComment());
+
+        Comment saved = commentRepository.save(findComment);
+        post.setModifiedAt(saved.getPost().getModifiedAt());
+        return saved;
+    }
 
 
 
@@ -75,6 +76,12 @@ public class CommentService {
 
 
     }
+    public Comment getComment(Long commentId) {
+
+        Comment comment = findVerifiedComment(commentId);
+        return comment;
+    }
+
 
     public Comment findVerifiedComment(long commentId) {
         Optional<Comment> optionalQuestion = commentRepository.findById(commentId);
@@ -88,7 +95,5 @@ public class CommentService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
     }
-
-
 
 }

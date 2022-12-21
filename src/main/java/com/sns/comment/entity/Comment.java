@@ -22,6 +22,7 @@ public class Comment {
 //                (nullable = false)
         private String comment;
 
+
         //멤버와 연관관계 매핑 필요 - member email 보이게 하기
         @ManyToOne
         @JoinColumn(name = "member_id")
@@ -31,9 +32,9 @@ public class Comment {
         @JoinColumn(name = "post_id")
         private Post post;
 
-        public void setPost(Post post) {
-                this.post = post;
-        }
+//        public void setPost(Post post) {
+//                this.post = post;
+//        }
 
 
 

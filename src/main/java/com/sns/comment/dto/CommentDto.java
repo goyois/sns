@@ -11,15 +11,17 @@ import java.time.LocalDateTime;
 public class CommentDto {
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Post {
 
-        private Long questionId;
+        private Long postId;
         private String comment;
 
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Patch {
 
@@ -35,10 +37,12 @@ public class CommentDto {
     @NoArgsConstructor
     public static class Response {
 
-        private Long postId;
         private Long commentId;
         private String comment;
         private ResponseDto.Response1 member;
+
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
 
     }
 }

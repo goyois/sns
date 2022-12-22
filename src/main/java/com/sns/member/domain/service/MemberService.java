@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,7 @@ public class MemberService {
         member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
+        savedMember.setCreatedAt(LocalDateTime.now());
         return savedMember;
     }
 
@@ -53,10 +56,14 @@ public class MemberService {
                 .ifPresent(phone -> patchMember.setPhone(phone));
         Optional.ofNullable(member.getAddress())
                 .ifPresent(address -> patchMember.setAddress(address));
+        Optional.ofNullable(member.getMemberStatus())
+                .ifPresent(memberStatus -> patchMember.setMemberStatus(memberStatus));
 
+        patchMember.setModifiedAt(LocalDateTime.now());
         return memberRepository.save(patchMember);
-    }
 
+    }
+    @Transactional(readOnly = true)
     public Member findMember(String email) {
         return findVerifiedMemberByEmail(email);
     }
@@ -71,17 +78,18 @@ public class MemberService {
         Member findMember = findVerifiedMemberByEmail(email);
         memberRepository.delete(findMember);
     }
-
-
+    @Transactional(readOnly = true)
     public Member findVerifiedMemberByEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
-        Member findMember = member.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member findMember = member.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
     }
 
 
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
-        if (member.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        if (member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 }

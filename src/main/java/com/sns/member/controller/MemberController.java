@@ -42,7 +42,6 @@ public class MemberController {
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.CREATED);
     }
 
-
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@Valid @RequestBody RequestDto.Patch patch,Principal principal){
         patch.setMemberId(memberService.findVerifiedMemberByEmail(principal.getName()).getMemberId());

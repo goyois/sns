@@ -83,6 +83,16 @@ public class MemberService {
         return findMember;
     }
 
+    //추가 이메일 확인
+    public Member findVerifiedMemberByEmail(String email) {
+        Optional<Member> optionalMember =
+                memberRepository.findByEmail(email);
+        Member findMember =
+                optionalMember.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findMember;
+    }
+
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent())

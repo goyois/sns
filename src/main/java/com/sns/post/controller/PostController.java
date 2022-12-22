@@ -20,11 +20,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 import java.util.List;
 
 
-@RequestMapping("/v1/posts/{email}") //로그인 시 아이디 넣기
+@RequestMapping("/v1/posts") //로그인 시 아이디 넣기
 @RestController
 @Validated
 @Slf4j
@@ -50,12 +52,12 @@ public class PostController {
      * 게시물 등록
      */
 
-    //Todo 인증 토큰받은 email 확인 추가하기
+    //Todo 인증 토큰받은 email 확인 추가하기 -member에 추가함
     @PostMapping("")
-    public ResponseEntity postPost(@PathVariable String email, @RequestBody PostDto.Post requestBody) {
+    public ResponseEntity postPost(@RequestBody PostDto.Post requestBody, Principal principal) {
 
         Post post = postMapper.postPostToPost(requestBody);
-        Post createPost = postService.createPost(email, post);
+        Post createPost = postService.createPost(post, principal);
         PostDto.Response response = postMapper.postToPostResponse(createPost);
 
         return new ResponseEntity<>(
@@ -68,12 +70,14 @@ public class PostController {
      */
 
     @PatchMapping("/{post-id}")
-    public ResponseEntity patchPost(@PathVariable("email") String email,
+    public ResponseEntity patchPost(
                                     @PathVariable("post-id") @Positive Long postId,
-                                    @RequestBody PostDto.Patch requestBody) {
+                                    @RequestBody PostDto.Patch requestBody, Principal principal) {
+
+        requestBody.setPostId(postId);
 
         Post post = postMapper.postPatchToPost(requestBody);
-        Post updatePost = postService.updatePost(email, post);
+        Post updatePost = postService.updatePost(post, principal);
         PostDto.Response response = postMapper.postToPostResponse(updatePost);
 
         return new ResponseEntity<>(

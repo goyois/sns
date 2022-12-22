@@ -23,6 +23,7 @@ public class PostDto {
     @AllArgsConstructor
     public static class Patch {
 
+        private Long postId;
         private String title;
         private String content;
 

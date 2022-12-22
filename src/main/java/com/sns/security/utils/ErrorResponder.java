@@ -7,7 +7,7 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-//error response를 출력 스트림으로 생성하는 역할
+//error response 를 출력 스트림으로 생성하는 역할
 public class ErrorResponder {
     public static void sendErrorResponse(HttpServletResponse response, HttpStatus status) throws IOException {
         Gson gson = new Gson();

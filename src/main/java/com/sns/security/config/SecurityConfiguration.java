@@ -1,7 +1,7 @@
 package com.sns.security.config;
 
 import com.sns.security.utils.CustomAuthorityUtils;
-import com.sns.security.utils.MemberAuthenticationEntryPoint;
+import com.sns.security.handler.MemberAuthenticationEntryPoint;
 import com.sns.security.filter.JwtAuthenticationFilter;
 import com.sns.security.filter.JwtVerificationFilter;
 import com.sns.security.handler.MemberAccessDeniedHandler;
@@ -27,6 +27,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class SecurityConfiguration {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .cors(Customizer.withDefaults())
+                .cors(withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)   //세션생성x
                 .and()
                 .formLogin().disable()

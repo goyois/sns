@@ -42,25 +42,23 @@ public class MemberService {
     }
 
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Member updateMember(Member member) {
-        Member findMember = findVerifiedMember(member.getMemberId());
+        Member patchMember = memberRepository.findByMemberId(member.getMemberId());
 
         Optional.ofNullable(member.getName())
-                .ifPresent(name -> findMember.setName(name));
+                .ifPresent(name -> patchMember.setName(name));
         Optional.ofNullable(member.getPassword())
-                .ifPresent(password -> findMember.setPassword(password));
+                .ifPresent(password -> patchMember.setPassword(passwordEncoder.encode(member.getPassword())));
         Optional.ofNullable(member.getPhone())
-                .ifPresent(phone -> findMember.setPhone(phone));
+                .ifPresent(phone -> patchMember.setPhone(phone));
         Optional.ofNullable(member.getAddress())
-                .ifPresent(address -> findMember.setAddress(address));
+                .ifPresent(address -> patchMember.setAddress(address));
 
-        return memberRepository.save(findMember);
+        return memberRepository.save(patchMember);
     }
 
-    @Transactional(readOnly = true)
-    public Member findMember(long memberId) {
-        return findVerifiedMember(memberId);
+    public Member findMember(String email) {
+        return findVerifiedMemberByEmail(email);
     }
 
     public Page<Member> findMembers(int page, int size) {
@@ -69,25 +67,21 @@ public class MemberService {
     }
 
 
-    public void deleteMember(long memberId) {
-        Member findMember = findVerifiedMember(memberId);
-
+    public void deleteMember(String email) {
+        Member findMember = findVerifiedMemberByEmail(email);
         memberRepository.delete(findMember);
     }
 
-    @Transactional(readOnly = true)
-    public Member findVerifiedMember(long memberId) {
-        Optional<Member> optionalMember =
-                memberRepository.findById(memberId);
-        Member findMember =
-                optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
+    public Member findVerifiedMemberByEmail(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        Member findMember = member.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
     }
 
+
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
-        if (member.isPresent())
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+        if (member.isPresent()) throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
 }

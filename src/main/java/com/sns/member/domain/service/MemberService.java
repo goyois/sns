@@ -78,6 +78,7 @@ public class MemberService {
         Member findMember = findVerifiedMemberByEmail(email);
         memberRepository.delete(findMember);
     }
+
     @Transactional(readOnly = true)
     public Member findVerifiedMemberByEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);

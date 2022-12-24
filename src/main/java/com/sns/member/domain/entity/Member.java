@@ -1,8 +1,7 @@
 package com.sns.member.domain.entity;
 
-import com.sns.comment.entity.Comment;
 import com.sns.common.BaseEntity;
-import com.sns.post.entity.Post;
+
 import lombok.*;
 
 
@@ -15,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "members")
+@ToString
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +38,8 @@ public class Member extends BaseEntity {
      * mappedBy = N의 외래키역할의 필드 값을 지정해줌
      * PERSIST = post 상태변화 전파
      */
-    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-    private List<Post> posts = new ArrayList<>();
+//    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+//    private List<Post> posts = new ArrayList<>();
 
 
     @ElementCollection(fetch = FetchType.EAGER)

@@ -1,13 +1,10 @@
 package com.sns.member.domain.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sns.member.domain.entity.QMember;
 import com.sns.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-
-import static com.sns.member.domain.entity.QMember.member;
 
 
 @RequiredArgsConstructor

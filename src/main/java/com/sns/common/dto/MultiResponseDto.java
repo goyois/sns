@@ -1,15 +1,16 @@
 package com.sns.common.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MultiResponseDto<T> {
-    private final List<T> data;
-    private final PageInfo pageInfo;
+    private List<T> data;
+    private PageInfo pageInfo;
 
     public MultiResponseDto(List<T> data, Page<?> page) {
         this.data = data;
@@ -17,14 +18,5 @@ public class MultiResponseDto<T> {
                 page.getSize(),
                 page.getTotalElements(),
                 page.getTotalPages());
-    }
-
-    @Getter
-    @AllArgsConstructor
-    private static class PageInfo{
-        private int page;
-        private int size;
-        private long totalElements;
-        private int totalPages;
     }
 }

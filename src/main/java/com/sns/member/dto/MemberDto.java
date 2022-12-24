@@ -13,30 +13,4 @@ public class MemberDto {
     private String email;
     private String nickname;
     private String name;
-    private String phone;
-    private String address;
-    private String birthday;
-
-
-    @QueryProjection
-    public MemberDto(Long memberId, Long postId, Long commentId, String email, String nickname, String name, String phone, String address, String birthday) {
-        this.memberId = memberId;
-        this.postId = postId;
-        this.commentId = commentId;
-        this.email = email;
-        this.nickname = nickname;
-        this.name = name;
-        this.phone = phone;
-        this.address = address;
-        this.birthday = birthday;
-    }
-
-    @QueryProjection
-    public MemberDto(Long memberId, Long postId, String nickname) {
-        this.memberId = memberId;
-        this.postId = postId;
-        this.nickname = nickname;
-    }
 }
-
-

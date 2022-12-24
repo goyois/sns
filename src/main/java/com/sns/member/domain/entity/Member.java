@@ -2,6 +2,7 @@ package com.sns.member.domain.entity;
 
 import com.sns.common.BaseEntity;
 
+import com.sns.post.entity.Post;
 import lombok.*;
 
 
@@ -38,8 +39,8 @@ public class Member extends BaseEntity {
      * mappedBy = N의 외래키역할의 필드 값을 지정해줌
      * PERSIST = post 상태변화 전파
      */
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-//    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Post> posts = new ArrayList<>();
 
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -60,6 +61,4 @@ public class Member extends BaseEntity {
             this.status = status;
         }
     }
-
-
 }

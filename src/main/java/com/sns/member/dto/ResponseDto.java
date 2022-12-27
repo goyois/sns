@@ -1,27 +1,23 @@
 package com.sns.member.dto;
 
-import com.sns.member.domain.entity.Member;
+
+import com.sns.member.enums.MemberStatus;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class ResponseDto {
-    @Getter
+    @Getter @Setter
     @AllArgsConstructor
     public static class Response {
+        private Long memberId;
         private String email;
+        private String password;
         private String name;
         private String phone;
         private String nickname;
-        private Integer age;
         private String birthday;
         private String address;
         private String profileImage;
-        private Member.MemberStatus memberStatus;
-
-        public Member.MemberStatus getMemberStatus() {
-            return memberStatus;
-        }
+        private MemberStatus memberStatus;
     }
 }

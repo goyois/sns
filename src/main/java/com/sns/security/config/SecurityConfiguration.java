@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
                         .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER","ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-                        // post 추가
+                        // board 추가
                         .antMatchers(HttpMethod.POST, "/*/posts/**").hasRole("USER")
                         .antMatchers(HttpMethod.PATCH, "/*/posts/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/*/posts").hasRole("USER")

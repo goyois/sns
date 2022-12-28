@@ -15,7 +15,7 @@ public class CommentDto {
     @AllArgsConstructor
     public static class Post {
 
-        private Long postId;
+        private Long boardId;
         private String comment;
 
     }

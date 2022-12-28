@@ -1,4 +1,4 @@
-package com.sns.post.entity;
+package com.sns.board.entity;
 
 import com.sns.comment.entity.Comment;
 import com.sns.common.BaseEntity;
@@ -15,11 +15,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post extends BaseEntity {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long boardId;
 
     @Column
 //            (nullable = false)
@@ -35,7 +35,7 @@ public class Post extends BaseEntity {
     private Member member;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "board_id")
     private List<Comment> comments = new ArrayList<>();
 
 }

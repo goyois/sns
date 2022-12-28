@@ -1,6 +1,5 @@
-package com.sns.post.dto;
+package com.sns.board.dto;
 
-import com.sns.member.dto.ResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,8 +9,8 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @Builder
-public class PostListDto {
-    private Long postId;
+public class BoardListDto {
+    private Long boardId;
     private String title;
     private String content;
     private LocalDateTime createdAt;

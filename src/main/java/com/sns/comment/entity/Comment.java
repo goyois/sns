@@ -1,7 +1,7 @@
 package com.sns.comment.entity;
 
 import com.sns.member.domain.entity.Member;
-import com.sns.post.entity.Post;
+import com.sns.board.entity.Board;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,11 +29,11 @@ public class Comment {
         private Member member;
 
         @ManyToOne
-        @JoinColumn(name = "post_id")
-        private Post post;
+        @JoinColumn(name = "board_id")
+        private Board board;
 
-//        public void setPost(Post post) {
-//                this.post = post;
+//        public void setBoard(Board board) {
+//                this.board = board;
 //        }
 
 

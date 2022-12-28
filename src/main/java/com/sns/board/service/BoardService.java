@@ -32,7 +32,7 @@ public class BoardService {
         this.memberService = memberService;
     }
 
-    public Board createPost(Board board, Principal principal) {
+    public Board createBoard(Board board, Principal principal) {
 
         Member member = memberService.findVerifiedMemberByEmail(principal.getName());
 
@@ -43,7 +43,7 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
-    public Board updatePost(Board board, Principal principal) {
+    public Board updateBoard(Board board, Principal principal) {
 
         Optional.ofNullable(board.getTitle()).ifPresent(title -> board.setTitle(title));
         Optional.ofNullable(board.getContent()).ifPresent(content -> board.setContent(content));
@@ -60,12 +60,12 @@ public class BoardService {
 
     }
 
-    public void deletePost(Long boardId) {
-        Board findBoard = findVerifiedPost(boardId);
+    public void deleteBoard(Long boardId) {
+        Board findBoard = findVerifiedBoard(boardId);
         boardRepository.delete(findBoard);
     }
 
-    public Board findVerifiedPost(Long boardId) {
+    public Board findVerifiedBoard(Long boardId) {
         Optional<Board> optionalPost =
                 boardRepository.findById(boardId);
         Board findBoard = optionalPost.orElseThrow(() ->
@@ -75,7 +75,7 @@ public class BoardService {
     }
 
     public Board findBoard(Long boardId) {
-        return findVerifiedPost(boardId);
+        return findVerifiedBoard(boardId);
     }
 
     public void verifyUserConfirm(Board board, Principal principal) {
@@ -88,7 +88,7 @@ public class BoardService {
 
     public Board getBoard(Long boardId) {
 
-        Board board = findVerifiedPost(boardId);
+        Board board = findVerifiedBoard(boardId);
         boardRepository.save(board);
 
         return boardRepository.findByBoardId(boardId);

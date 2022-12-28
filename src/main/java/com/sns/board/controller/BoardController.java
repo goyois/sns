@@ -53,7 +53,7 @@ public class BoardController {
     public ResponseEntity boardPost(@RequestBody BoardDto.Post requestBody, Principal principal) {
 
         Board board = boardMapper.boardPostToPost(requestBody);
-        Board createBoard = boardService.createPost(board, principal);
+        Board createBoard = boardService.createBoard(board, principal);
         BoardDto.Response response = boardMapper.boardToPostResponse(createBoard);
 
         return new ResponseEntity<>(
@@ -73,7 +73,7 @@ public class BoardController {
         requestBody.setBoardId(boardId);
 
         Board board = boardMapper.boardPatchToPost(requestBody);
-        Board updateBoard = boardService.updatePost(board, principal);
+        Board updateBoard = boardService.updateBoard(board, principal);
         BoardDto.Response response = boardMapper.boardToPostResponse(updateBoard);
 
         return new ResponseEntity<>(
@@ -122,7 +122,7 @@ public class BoardController {
     @DeleteMapping("/{board-id}")
     public ResponseEntity deleteBoard(@PathVariable("board-id") @Positive Long boardId) {
 
-        boardService.deletePost(boardId);
+        boardService.deleteBoard(boardId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -9,9 +9,14 @@ import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.repository.MemberRepository;
 import com.sns.board.repository.BoardRepository;
 import com.sns.board.service.BoardService;
+import com.sns.member.domain.service.MemberService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -20,26 +25,31 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final BoardRepository boardRepository;
+
 
     private final BoardService boardService;
 
 
-    public CommentService(CommentRepository commentRepository, MemberRepository memberRepository, BoardRepository boardRepository, BoardService boardService) {
+    public CommentService(CommentRepository commentRepository, MemberRepository memberRepository, MemberService memberService, BoardRepository boardRepository, BoardService boardService) {
         this.commentRepository = commentRepository;
         this.memberRepository = memberRepository;
+        this.memberService = memberService;
         this.boardRepository = boardRepository;
         this.boardService = boardService;
     }
 
-    public Comment createComment(String email, Long boardId, Comment comment) {
+    public Comment createComment(Long boardId, Comment comment, Principal principal) {
 
-        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+//        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
+//                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member member = memberService.findVerifiedMemberByEmail(principal.getName());
 
         Board board = boardService.getBoard(boardId);
 
         comment.setMember(member);
+        comment.setCreatedAt(LocalDateTime.now());
         comment.setBoard(board);
 
 
@@ -53,12 +63,12 @@ public class CommentService {
         Board board = boardService.getBoard(boardId);
         Comment findComment = commentRepository.findById(comment.getCommentId()).get();
 
-        verifyUserConfirm(findComment, principal);
+        verifyMemberConfirm(findComment, principal);
 
         findComment.setComment(comment.getComment());
 
         Comment saved = commentRepository.save(findComment);
-        board.setModifiedAt(saved.getBoard().getModifiedAt());
+        comment.setModifiedAt(saved.getBoard().getModifiedAt());
         return saved;
     }
 
@@ -69,7 +79,7 @@ public class CommentService {
         Board board = boardService.getBoard(boardId);
         Comment findComment = commentRepository.findById(commentId).get();
 
-        verifyUserConfirm(findComment, principal);
+        verifyMemberConfirm(findComment, principal);
 
 
        commentRepository.delete(findComment);
@@ -89,11 +99,19 @@ public class CommentService {
                 new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
     }
 
-    public void verifyUserConfirm(Comment comment, Principal principal) {
+    public void verifyMemberConfirm(Comment comment, Principal principal) {
 
         if (!Objects.equals(principal.getName(), comment.getMember().getEmail())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
     }
 
+    //답변 조회
+    public Page<Comment> readComments(Board board, int page, int size) {
+
+        Page<Comment> comments = commentRepository.findCommentsByBoard(
+                PageRequest.of(page, size, Sort.by("commentId").descending()), board);
+
+        return comments;
+    }
 }

@@ -33,7 +33,7 @@ public class ResponseDto {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Response1 {
+    public static class ResponseMain {
 
         private long memberId;
         private String email;

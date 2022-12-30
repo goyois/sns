@@ -32,6 +32,8 @@ public class BoardService {
         this.memberService = memberService;
     }
 
+
+
     public Board createBoard(Board board, Principal principal) {
 
         Member member = memberService.findVerifiedMemberByEmail(principal.getName());
@@ -78,7 +80,7 @@ public class BoardService {
         return findVerifiedBoard(boardId);
     }
 
-    public void verifyUserConfirm(Board board, Principal principal) {
+    public void verifyMemberConfirm(Board board, Principal principal) {
 
         if (!Objects.equals(principal.getName(), board.getMember().getEmail())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
@@ -97,7 +99,7 @@ public class BoardService {
     public Page<Board> getBoardList(int page, int size) {
 
         Pageable pageable = PageRequest.of(page - 1, size,
-                Sort.by("postId").descending());
+                Sort.by("boardId").descending());
         return boardRepository.findAll(pageable);
     }
 

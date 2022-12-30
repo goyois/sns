@@ -34,8 +34,8 @@ public class Board extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private List<Comment> comments = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "board_id")
+//    private List<Comment> comments = new ArrayList<>();
 
 }

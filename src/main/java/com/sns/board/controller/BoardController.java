@@ -1,6 +1,7 @@
 package com.sns.board.controller;
 
 import com.sns.board.dto.BoardDto;
+import com.sns.board.dto.BoardToResponseDetail;
 import com.sns.board.entity.Board;
 import com.sns.board.mapper.BoardMapper;
 import com.sns.comment.mapper.CommentMapper;
@@ -10,6 +11,7 @@ import com.sns.common.dto.PageInfo;
 import com.sns.common.dto.SingleResponseDto;
 import com.sns.board.dto.BoardListDto;
 import com.sns.board.service.BoardService;
+import com.sns.member.mapper.MemberMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -34,13 +36,16 @@ public class BoardController {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
 
+    private final MemberMapper memberMapper;
+
     //Todo member 받아오기 - 게시글은 로그인 시에만 작성가능
 
-    public BoardController(BoardService boardService, BoardMapper boardMapper, CommentService commentService, CommentMapper commentMapper) {
+    public BoardController(BoardService boardService, BoardMapper boardMapper, CommentService commentService, CommentMapper commentMapper, MemberMapper memberMapper) {
         this.boardService = boardService;
         this.boardMapper = boardMapper;
         this.commentService = commentService;
         this.commentMapper = commentMapper;
+        this.memberMapper = memberMapper;
 
     }
 
@@ -60,6 +65,7 @@ public class BoardController {
                 new SingleResponseDto<>(response),
                 HttpStatus.CREATED);
     }
+
 
     /**
      * 게시물 수정
@@ -103,16 +109,32 @@ public class BoardController {
     /**
      * 게시물 조회
      */
+    @GetMapping("/list/{board-id}")
+    public ResponseEntity getBoardListDetail (@PathVariable("board-id") @Positive Long boardId,
+                                              @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+                                              @RequestParam(name = "size", required = false, defaultValue = "30") int size){
 
-    @GetMapping("/{board-id}")
-    public ResponseEntity getBoard(@PathVariable("board-id") @Positive Long boardId) {
+        Board board = boardService.getBoard(boardId);
 
-        Board board = boardService.findBoard(boardId);
+        BoardToResponseDetail boardToResponseDetail = boardMapper.boardToResponseDetail(board, memberMapper);
+
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(boardMapper.boardToPostResponse(board)),
-                HttpStatus.OK);
+                boardMapper.DetailToBoardCommentPageInfo(
+                        boardToResponseDetail, commentService, commentMapper, page - 1, size, board)
+                , HttpStatus.OK);
     }
+
+
+//    @GetMapping("list/{board-id}")
+//    public ResponseEntity getBoard(@PathVariable("board-id") @Positive Long boardId) {
+//
+//        Board board = boardService.findBoard(boardId);
+//
+//        return new ResponseEntity<>(
+//                new SingleResponseDto<>(boardMapper.boardToPostResponse(board)),
+//                HttpStatus.OK);
+//    }
 
 
     /**

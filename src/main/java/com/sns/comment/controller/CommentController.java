@@ -13,11 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/v1/posts/{email}") //로그인 시 아이디 넣기
+@RequestMapping("/v1/boards/") //로그인 시 아이디 넣기
 @Validated
 @Slf4j
 public class CommentController {
@@ -35,36 +36,36 @@ public class CommentController {
     }
 
 
-    // @PostMapping("/{board-id}/comments")
-    //    public ResponseEntity postComment(@PathVariable("board-id") Long postId,
-    //                                     @Valid @RequestBody CommentDto.Board requestBody,
-    //                                     Principal principal) {
-    //
-    //        Board board = questionRepository.findByQuestionId(questionId);
-    //
-    //        Comment comment = commentService.createComment(commentMapper.commentPostToPost(requestBody, board), postId, principal);
-    //
-    //        CommentDto.Response response = commentMapper.commentToPostResponse(comment);
-    //
-    //        return new ResponseEntity<>(SingleResponseDto<>(response), HttpStatus.CREATED);
-    //    }
-
-        @PostMapping("{board-id}/comments")
-        public ResponseEntity commentPost(@PathVariable("email") String email, @PathVariable("board-id") Long boardId, @RequestBody CommentDto.Post requestBody) {
+     @PostMapping("/{board-id}/comments")
+        public ResponseEntity postComment(@PathVariable("board-id") Long boardId,
+                                         @Valid @RequestBody CommentDto.Post requestBody,
+                                         Principal principal) {
 
             Board board = boardRepository.findByBoardId(boardId);
 
-            Comment comment = commentService.createComment(email, boardId, commentMapper.commentPostToPost(requestBody, board));
+            Comment comment = commentService.createComment(boardId, commentMapper.commentPostToPost(requestBody, board), principal);
 
-//            Comment comment = commentMapper.commentPostToPost(requestBody, board);
-//            Comment createPost = commentService.createComment(email, postId, comment);
             CommentDto.Response response = commentMapper.commentToPostResponse(comment);
 
-            return new ResponseEntity<>(
-                    new SingleResponseDto<>(response),
-                    HttpStatus.CREATED);
-
+            return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
         }
+
+//        @PostMapping("{board-id}/comments")
+//        public ResponseEntity commentPost(@PathVariable("email") String email, @PathVariable("board-id") Long boardId, @RequestBody CommentDto.Post requestBody) {
+//
+//            Board board = boardRepository.findByBoardId(boardId);
+//
+//            Comment comment = commentService.createComment(email, boardId, commentMapper.commentPostToPost(requestBody, board));
+//
+////            Comment comment = commentMapper.commentPostToPost(requestBody, board);
+////            Comment createPost = commentService.createComment(email, postId, comment);
+//            CommentDto.Response response = commentMapper.commentToPostResponse(comment);
+//
+//            return new ResponseEntity<>(
+//                    new SingleResponseDto<>(response),
+//                    HttpStatus.CREATED);
+//
+//        }
         @PatchMapping("{board-id}/comments/update")
         public ResponseEntity commentPatch(@PathVariable("board-id") Long postId , @RequestBody CommentDto.Patch requestBody, Principal principal) {
 

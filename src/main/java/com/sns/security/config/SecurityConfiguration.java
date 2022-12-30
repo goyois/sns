@@ -60,11 +60,11 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER","ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
                         // board 추가
-                        .antMatchers(HttpMethod.POST, "/*/posts/**").hasRole("USER")
-                        .antMatchers(HttpMethod.PATCH, "/*/posts/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/posts").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/posts/**").hasAnyRole("USER","ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/*/posts/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.POST, "/*/posts/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.PATCH, "/*/posts/**").hasRole("USER")
+//                        .antMatchers(HttpMethod.GET, "/*/posts").hasRole("USER")
+//                        .antMatchers(HttpMethod.GET, "/*/posts/**").hasAnyRole("USER","ADMIN")
+//                        .antMatchers(HttpMethod.DELETE, "/*/posts/**").hasRole("USER")
                         .anyRequest().permitAll());
         return http.build();
     }

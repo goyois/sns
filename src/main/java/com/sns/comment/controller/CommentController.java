@@ -37,20 +37,12 @@ public class CommentController {
 
 
         @PostMapping("{post-id}/comments")
-        public ResponseEntity commentPost(@PathVariable("email") String email, @PathVariable("post-id") Long postId, @RequestBody CommentDto.Post requestBody) {
-
+        public ResponseEntity commentPost(@PathVariable("email") String email, @PathVariable("post-id") Long postId,
+                                          @RequestBody CommentDto.Post requestBody) {
             Post post = postRepository.findByPostId(postId);
-
             Comment comment = commentService.createComment(email,postId, commentMapper.commentPostToPost(requestBody, post));
-
-//            Comment comment = commentMapper.commentPostToPost(requestBody, post);
-//            Comment createPost = commentService.createComment(email, postId, comment);
             CommentDto.Response response = commentMapper.commentToPostResponse(comment);
-
-            return new ResponseEntity<>(
-                    new SingleResponseDto<>(response),
-                    HttpStatus.CREATED);
-
+            return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
         }
 
 //        @DeleteMapping("{post-id}/comments/{comment-id}")

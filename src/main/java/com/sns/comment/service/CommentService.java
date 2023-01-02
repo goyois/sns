@@ -32,7 +32,6 @@ public class CommentService {
 
         Member member = memberRepository.findByEmail(email).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-
         Post post = postService.getPost(postId);
 
         comment.setMember(member);

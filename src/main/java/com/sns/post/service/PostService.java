@@ -23,14 +23,9 @@ public class PostService {
     }
 
     public Post createPost(String email, Post post) {
-
-        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-
-
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         post.setMember(member);
         post.setCreatedAt(LocalDateTime.now());
-
         return postRepository.save(post);
     }
 

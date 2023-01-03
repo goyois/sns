@@ -1,7 +1,9 @@
 package com.sns.comment.entity;
 
+import com.sns.comment.dto.CommentDto;
+import com.sns.common.BaseEntity;
 import com.sns.member.domain.entity.Member;
-import com.sns.post.entity.Post;
+import com.sns.board.entity.Board;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class Comment extends BaseEntity {
 
 
         @Id
@@ -26,14 +28,18 @@ public class Comment {
         @ManyToOne
         @JoinColumn(name = "member_id")
         private Member member;
+//        private  long memberId;
 
         @ManyToOne
-        @JoinColumn(name = "post_id")
-        private Post post;
+        @JoinColumn(name = "board_id")
+        private Board board;
 
-        public void setPost(Post post) {
+        public void setPost(CommentDto.Post post) {
                 this.post = post;
         }
+//        public void setBoard(Board board) {
+//                this.board = board;
+//        }
 
 
 

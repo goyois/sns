@@ -1,6 +1,5 @@
 package com.sns.member.dto;
 
-
 import com.sns.member.enums.MemberStatus;
 import lombok.*;
 

@@ -11,9 +11,8 @@ public enum ExceptionCode {
     UNAUTHORIZED_NOT_USER(401, "You must be logged."),
     EXPIRED_TOKEN(401, "Token is expired"),
     UNAUTHORIZED(401, "Unauthorized"),
-    EMPTY_TOKEN(401, "Access Token is empty");
-
-
+    EMPTY_TOKEN(401, "Access Token is empty"),
+    BOARD_NOT_FOUND(404,"Board Not Found");
 
 
     @Getter

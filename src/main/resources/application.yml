@@ -1,4 +1,5 @@
 spring:
+<<<<<<< HEAD
   #    defer-datasource-initialization : true
   #  sql:
   #    init:
@@ -13,12 +14,6 @@ spring:
             scope:
               - email
               - profile
-logging:
-  level:
-    org:
-      springframework:
-        orm:
-          jpa: DEBUG
 ---
 spring:
   profiles:

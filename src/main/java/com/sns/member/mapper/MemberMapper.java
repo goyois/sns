@@ -13,5 +13,7 @@ public interface MemberMapper {
     Member postToMember(RequestDto.Post post);
     Member patchToMember(RequestDto.Patch patch);
     ResponseDto.Response memberToResponse(Member member);
+
+    ResponseDto.ResponseMain memberToResponseMain(Member member);
     List<ResponseDto.Response> MembersToResponse(List<Member> members);
 }

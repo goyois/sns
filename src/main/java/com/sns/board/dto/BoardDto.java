@@ -1,4 +1,4 @@
-package com.sns.post.dto;
+package com.sns.board.dto;
 
 import com.sns.member.dto.ResponseDto;
 import lombok.*;
@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 //@Data 검색해보기
-public class PostDto {
+public class BoardDto {
 
     @Getter
     @AllArgsConstructor
@@ -23,6 +23,8 @@ public class PostDto {
     @AllArgsConstructor
     public static class Patch {
 
+
+        private Long boardId;
         private String title;
         private String content;
 
@@ -36,6 +38,8 @@ public class PostDto {
         private String title;
         private String content;
 
+        private Long boardId;
+        private ResponseDto.ResponseMain member;
 
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 @Data
 public class MemberHistoryDto {
     private Long memberHistoryId;
-    private Long postId;
+    private Long boardId;
     private Long commentId;
     private String nickname;
     private String content;
@@ -19,9 +19,9 @@ public class MemberHistoryDto {
 
 
     @QueryProjection
-    public MemberHistoryDto(Long memberHistoryId, Long postId, Long commentId, String nickname, String content) {
+    public MemberHistoryDto(Long memberHistoryId, Long boardId, Long commentId, String nickname, String content) {
         this.memberHistoryId = memberHistoryId;
-        this.postId = postId;
+        this.boardId = boardId;
         this.commentId = commentId;
         this.nickname = nickname;
         this.content = content;

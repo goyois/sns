@@ -36,7 +36,7 @@ public class CommentDto {
         private Long commentId;
         private String comment;
         //private ResponseDto.Response1 member;
-        private ResponseDto.ResponseMain member;
+
 
 
     }

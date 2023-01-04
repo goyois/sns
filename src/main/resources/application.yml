@@ -1,5 +1,4 @@
 spring:
-<<<<<<< HEAD
   #    defer-datasource-initialization : true
   #  sql:
   #    init:

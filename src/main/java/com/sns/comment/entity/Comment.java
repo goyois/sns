@@ -28,19 +28,10 @@ public class Comment extends BaseEntity {
         @ManyToOne
         @JoinColumn(name = "member_id")
         private Member member;
-//        private  long memberId;
 
+//        private  long memberId;
         @ManyToOne
         @JoinColumn(name = "board_id")
         private Board board;
-
-        public void setPost(CommentDto.Post post) {
-                this.post = post;
-        }
-//        public void setBoard(Board board) {
-//                this.board = board;
-//        }
-
-
 
 }

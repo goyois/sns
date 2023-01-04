@@ -1,9 +1,9 @@
 package com.sns.member.domain.entity;
 
+import com.sns.board.entity.Board;
 import com.sns.common.BaseEntity;
 
 import com.sns.member.enums.MemberStatus;
-import com.sns.post.entity.Post;
 import lombok.*;
 
 
@@ -41,7 +41,7 @@ public class Member extends BaseEntity {
      * PERSIST = post 상태변화 전파
      */
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-    private List<Post> posts = new ArrayList<>();
+    private List<Board> boards = new ArrayList<>();
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
     @Enumerated(EnumType.STRING)

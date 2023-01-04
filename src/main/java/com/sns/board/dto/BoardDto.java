@@ -39,7 +39,7 @@ public class BoardDto {
         private String content;
 
         private Long boardId;
-        private ResponseDto.ResponseMain member;
+
 
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/v1/boards/") //로그인 시 아이디 넣기
@@ -35,26 +36,21 @@ public class CommentController {
     }
 
 
-        @PostMapping("{post-id}/comments")
-        public ResponseEntity commentPost(@PathVariable("email") String email, @PathVariable("post-id") Long postId,
-                                          @RequestBody CommentDto.Post requestBody) {
-            Post post = postRepository.findByPostId(postId);
-            Comment comment = commentService.createComment(email,postId, commentMapper.commentPostToPost(requestBody, post));
-     @PostMapping("/{board-id}/comments")
-        public ResponseEntity postComment(@PathVariable("board-id") Long boardId,
-                                         @Valid @RequestBody CommentDto.Post requestBody,
-                                         Principal principal) {
+    @PostMapping("/{board-id}/comments")
+    public ResponseEntity postComment(@PathVariable("board-id") Long boardId,
+                                      @Valid @RequestBody CommentDto.Post requestBody,
+                                      Principal principal) {
 
-            Board board = boardRepository.findByBoardId(boardId);
+        Board board = boardRepository.findByBoardId(boardId);
 
-            Comment comment = commentService.createComment(boardId, commentMapper.commentPostToPost(requestBody, board), principal);
+        Comment comment = commentService.createComment(boardId, commentMapper.commentPostToPost(requestBody, board), principal);
 
-            CommentDto.Response response = commentMapper.commentToPostResponse(comment);
+        CommentDto.Response response = commentMapper.commentToPostResponse(comment);
 
-            return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
-        }
+        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
+    }
 
-//        @PostMapping("{board-id}/comments")
+    //        @PostMapping("{board-id}/comments")
 //        public ResponseEntity commentPost(@PathVariable("email") String email, @PathVariable("board-id") Long boardId, @RequestBody CommentDto.Post requestBody) {
 //
 //            Board board = boardRepository.findByBoardId(boardId);
@@ -70,44 +66,40 @@ public class CommentController {
 //                    HttpStatus.CREATED);
 //
 //        }
-        @PatchMapping("{board-id}/comments/update")
-        public ResponseEntity commentPatch(@PathVariable("board-id") Long postId , @RequestBody CommentDto.Patch requestBody, Principal principal) {
+    @PatchMapping("{board-id}/comments/update")
+    public ResponseEntity commentPatch(@PathVariable("board-id") Long postId , @RequestBody CommentDto.Patch requestBody, Principal principal) {
 
 
-            Comment comment = commentService.updateComment(commentMapper.commentPatchToPost(requestBody), postId, principal);
+        Comment comment = commentService.updateComment(commentMapper.commentPatchToPost(requestBody), postId, principal);
 
-            CommentDto.Response response = commentMapper.commentToPostResponse(comment);
-            return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.CREATED);
-        }
+        CommentDto.Response response = commentMapper.commentToPostResponse(comment);
 
-//        @DeleteMapping("{post-id}/comments/{comment-id}")
-//        public ResponseEntity deleteComment(@PathVariable("email") String email, @PathVariable("post-id") Long postId, @PathVariable("comment-id") Long commentId)
-//        {
-//            commentService.delecteComment(commentId, postId, email);
-//            return new ResponseEntity<>(
-//                    new SingleResponseDto<>(response),
-//                    HttpStatus.OK);
-//        }
-        @GetMapping("{board-id}/comments/{comment-id}")
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response),
+                HttpStatus.OK);
+    }
 
-        public ResponseEntity getComment(@PathVariable("board-id") @Positive Long boardId, @PathVariable("comment-id") @Positive Long commentId) {
+    @GetMapping("{board-id}/comments/{comment-id}")
 
-            Board board = boardRepository.findByBoardId(boardId);
-            Comment comment = commentService.getComment(commentId);
+    public ResponseEntity getComment(@PathVariable("board-id") @Positive Long boardId, @PathVariable("comment-id") @Positive Long commentId) {
 
-            return new ResponseEntity<>(
-                    new SingleResponseDto<>(commentMapper.commentToPostResponse(comment)),
-                    HttpStatus.OK);
+        Board board = boardRepository.findByBoardId(boardId);
+        Comment comment = commentService.getComment(commentId);
 
-        }
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(commentMapper.commentToPostResponse(comment)),
+                HttpStatus.OK);
+
+    }
 
 
 
-        @DeleteMapping("{board-id}/comments/{comment-id}")
-        public ResponseEntity deleteComment(@PathVariable("board-id") Long postId, @PathVariable("comment-id") Long commentId, Principal principal)
-        {
-            commentService.deleteComment(commentId, postId, principal);
+    @DeleteMapping("{board-id}/comments/{comment-id}")
+    public ResponseEntity deleteComment(@PathVariable("board-id") Long postId, @PathVariable("comment-id") Long commentId, Principal principal)
+    {
+        commentService.deleteComment(commentId, postId, principal);
 
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); //204
-        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT); //204
+    }
+
 }

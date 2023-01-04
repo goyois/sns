@@ -43,9 +43,6 @@ public class CommentService {
 
     public Comment createComment(Long boardId, Comment comment, Principal principal) {
 
-        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        Post post = postService.getPost(postId);
 //        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
 //                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Member member = memberService.findVerifiedMemberByEmail(principal.getName());

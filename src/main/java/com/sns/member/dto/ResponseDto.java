@@ -19,4 +19,16 @@ public class ResponseDto {
         private String profileImage;
         private MemberStatus memberStatus;
     }
+
+
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResponseMain {
+
+        private long memberId;
+        private String email;
+    }
 }

@@ -75,7 +75,6 @@ public class MemberService {
                 Sort.by("memberId").descending()));
     }
 
-
     public void deleteMember(String email) {
         Member findMember = findVerifiedMemberByEmail(email);
         memberRepository.delete(findMember);

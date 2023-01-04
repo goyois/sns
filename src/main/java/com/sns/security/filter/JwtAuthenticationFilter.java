@@ -1,6 +1,5 @@
 package com.sns.security.filter;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sns.member.domain.entity.Member;
 import com.sns.security.dto.LoginDto;
@@ -20,23 +19,26 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+// UsernamePasswordAuthenticationFilter: 플러그인 방식에서 사용되는 디폴트 Security Filter -> Username/Password 기반의
+// 인증을 처리하기 위해 확장구현
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
 
-
-    @SneakyThrows
+    //메서드 내부 인증
+    @SneakyThrows  //명시적인 예외 처리를 생략(throws 혹은 try-catch 구문 생략 -> request.getInputStream()의 throw 구문 생략을 위함
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
-        ObjectMapper objectMapper = new ObjectMapper();  //3-1 역직렬화를 위한 오브젝트매퍼 인스턴스 생성
-        LoginDto loginDto = objectMapper.readValue(request.getInputStream(),LoginDto.class); //3-2
+        ObjectMapper objectMapper = new ObjectMapper();  // 역직렬화를 위한 오브젝트매퍼 인스턴스 생성(JSON 형식을 사용할 때 직렬화, 역직렬화 할 때 ObjectMapper 를 사용)
+        LoginDto loginDto = objectMapper.readValue(request.getInputStream(),LoginDto.class);  //ServletInputStream을 loginDto 객체로 역직렬화
 
+        //Username 과 Password 정보를 포함한 UsernamePasswordAuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(),loginDto.getPassword());  //3-3
-        return authenticationManager.authenticate(authenticationToken);  //3-4
+                new UsernamePasswordAuthenticationToken(loginDto.getUsername(),loginDto.getPassword());
+
+        return authenticationManager.authenticate(authenticationToken);  //AuthenticationManager 에게 UsernamePasswordAuthenticationToken 전달
     }
 
 
@@ -45,18 +47,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws ServletException, IOException {
-        Member member = (Member) authResult.getPrincipal();  //4-1
+        Member member = (Member) authResult.getPrincipal();  //인증
 
-        String accessToken = delegateAccessToken(member);  //4-2
-        String refreshToken = delegateRefreshToken(member);  //4-3
+        String accessToken = delegateAccessToken(member);
+        String refreshToken = delegateRefreshToken(member);
 
-        response.setHeader("Authorization","Bearer" + accessToken);  //4-4
-        response.setHeader("Refresh",  refreshToken);  //4-5
+        response.setHeader("Authorization","Bearer" + accessToken);
+        response.setHeader("Refresh",  refreshToken);
 
-        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);  // 추가
+        this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
 
     }
-//5
+
     private String delegateAccessToken(Member member) {
         Map<String,Object> claims = new HashMap<>();
         claims.put("username", member.getEmail());
@@ -67,7 +69,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = jwtTokenizer.generateAccessToken(claims,subject,expiration,base64EncodedSecretKey);
         return accessToken;
     }
-//6
+
     private String delegateRefreshToken(Member member) {
         String subject = member.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());

@@ -1,7 +1,7 @@
 package com.sns.security.config;
 
-import com.sns.security.auth.CustomAuthorityUtils;
-import com.sns.security.auth.MemberAuthenticationEntryPoint;
+import com.sns.security.utils.CustomAuthorityUtils;
+import com.sns.security.handler.MemberAuthenticationEntryPoint;
 import com.sns.security.filter.JwtAuthenticationFilter;
 import com.sns.security.filter.JwtVerificationFilter;
 import com.sns.security.handler.MemberAccessDeniedHandler;
@@ -26,7 +26,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.List;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -42,7 +43,7 @@ public class SecurityConfiguration {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .cors(Customizer.withDefaults())
+                .cors(withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)   //세션생성x
                 .and()
                 .formLogin().disable()
@@ -55,16 +56,20 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/*/members").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER") //** = member 하위 전부 허용
+                        .antMatchers(HttpMethod.PATCH, "/*/members/**").hasRole("USER")
                         .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER","ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-                        // board 추가
-//                        .antMatchers(HttpMethod.POST, "/*/posts/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.PATCH, "/*/posts/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.GET, "/*/posts").hasRole("USER")
-//                        .antMatchers(HttpMethod.GET, "/*/posts/**").hasAnyRole("USER","ADMIN")
-//                        .antMatchers(HttpMethod.DELETE, "/*/posts/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER") //
+                        .antMatchers(HttpMethod.POST, "/*/post").hasAnyRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/*/post/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/*/post/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.GET, "/*/post").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/*/post").hasAnyRole("USER","ADMIN")
+                        .antMatchers(HttpMethod.POST, "/*/comment").hasAnyRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/*/comment/**").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/*/comment/**").hasAnyRole("USER", "ADMIN")
+                        .antMatchers(HttpMethod.GET, "/*/comment").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/*/comment").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll());
         return http.build();
     }
@@ -80,9 +85,6 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH","DELETE"));
 
-        configuration.setAllowedHeaders(List.of(CorsConfiguration.ALL)); //cors 오류로 인해 추가
-        configuration.addExposedHeader("Authorization");//클라이언트에 헤더 보여주기
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
@@ -93,7 +95,7 @@ public class SecurityConfiguration {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager,jwtTokenizer);
-            jwtAuthenticationFilter.setFilterProcessesUrl("/v1/auth/login");
+            jwtAuthenticationFilter.setFilterProcessesUrl("/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());  //성공 핸들러메시지
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());  //실패 핸들러메시지
 

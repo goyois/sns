@@ -1,10 +1,11 @@
 package com.sns.security.handler;
 
-import com.sns.security.auth.ErrorResponder;
+import com.sns.security.utils.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 
 @Slf4j
+@Component
 public class MemberAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request,
@@ -21,7 +23,7 @@ public class MemberAccessDeniedHandler implements AccessDeniedHandler {
         ErrorResponder.sendErrorResponse(response, HttpStatus.FORBIDDEN);
         log.warn("Forbidden error happened: {}", accessDeniedException.getMessage());
 
-        // DaoAuthenticationProvider
+
     }
 }
 

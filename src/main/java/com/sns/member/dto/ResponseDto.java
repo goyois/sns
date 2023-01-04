@@ -25,5 +25,16 @@ public class ResponseDto {
         }
     }
 
+    //추가사항 - 전체 내용 필요없어서 게시물 등록할 때 메일하고 멤버 아이디만 보내는 거 추가
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ResponseMain {
+
+        private long memberId;
+        private String email;
+    }
 
 }

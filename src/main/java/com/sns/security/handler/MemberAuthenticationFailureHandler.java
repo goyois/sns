@@ -3,6 +3,8 @@ package com.sns.security.handler;
 
 import com.google.gson.Gson;
 import com.sns.common.advice.ErrorResponse;
+import com.sns.security.dto.LoginDto;
+import com.sns.security.dto.LoginResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,17 +21,16 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        AuthenticationException exception) throws IOException, ServletException {
+                                        AuthenticationException exception) throws IOException {
         log.error("# Authentication failed: {}", exception.getMessage());
         sendErrorResponse(response);
     }
 
     private void sendErrorResponse(HttpServletResponse response) throws IOException {
         Gson gson = new Gson();
-        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(gson.toJson(errorResponse,ErrorResponse.class));
+        response.getWriter().write(gson.toJson(new LoginResponseDto("log-in failure")));
     }
 
 

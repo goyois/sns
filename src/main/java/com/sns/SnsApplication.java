@@ -15,7 +15,6 @@ public class SnsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SnsApplication.class, args);
 	}
-
 	@Bean
 	JPAQueryFactory jpaQueryFactory(EntityManager em) {
 		return new JPAQueryFactory(em);

@@ -1,23 +1,27 @@
 package com.sns.comment.dto;
 
+import com.sns.member.dto.ResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 public class CommentDto {
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Post {
 
-        private Long questionId;
         private Long boardId;
         private String comment;
 
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Patch {
 
@@ -35,9 +39,10 @@ public class CommentDto {
 
         private Long commentId;
         private String comment;
-        //private ResponseDto.Response1 member;
+        private ResponseDto.ResponseMain member;
 
-
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
 
     }
 }

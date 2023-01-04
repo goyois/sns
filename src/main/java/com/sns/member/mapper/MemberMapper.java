@@ -4,7 +4,7 @@ import com.sns.member.domain.entity.Member;
 import com.sns.member.dto.RequestDto;
 import com.sns.member.dto.ResponseDto;
 import org.mapstruct.Mapper;
-
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
@@ -16,4 +16,5 @@ public interface MemberMapper {
 
     ResponseDto.ResponseMain memberToResponseMain(Member member);
     List<ResponseDto.Response> MembersToResponse(List<Member> members);
+
 }

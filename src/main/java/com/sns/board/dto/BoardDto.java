@@ -23,7 +23,6 @@ public class BoardDto {
     @AllArgsConstructor
     public static class Patch {
 
-
         private Long boardId;
         private String title;
         private String content;
@@ -37,9 +36,9 @@ public class BoardDto {
 
         private String title;
         private String content;
-
         private Long boardId;
-
+        private ResponseDto.ResponseMain member;
+//        private ResponseDto.Response member;
 
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

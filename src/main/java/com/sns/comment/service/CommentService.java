@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -57,7 +56,6 @@ public class CommentService {
         return commentRepository.save(comment);
 
     }
-
 
 
     public Comment updateComment(Comment comment, Long boardId, Principal principal) {
@@ -117,7 +115,3 @@ public class CommentService {
         return comments;
     }
 }
-
-//    public void deleteComment()
-//
-// }

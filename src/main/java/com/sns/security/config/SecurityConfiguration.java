@@ -1,18 +1,19 @@
 package com.sns.security.config;
 
+import com.sns.security.utils.CustomAuthorityUtils;
+import com.sns.security.handler.MemberAuthenticationEntryPoint;
 import com.sns.security.filter.JwtAuthenticationFilter;
 import com.sns.security.filter.JwtVerificationFilter;
 import com.sns.security.handler.MemberAccessDeniedHandler;
-import com.sns.security.handler.MemberAuthenticationEntryPoint;
 import com.sns.security.handler.MemberAuthenticationFailureHandler;
 import com.sns.security.handler.MemberAuthenticationSuccessHandler;
 import com.sns.security.jwt.JwtTokenizer;
-import com.sns.security.utils.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -69,14 +70,6 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/*/comment/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.GET, "/*/comment").permitAll()
                         .antMatchers(HttpMethod.DELETE, "/*/comment").hasAnyRole("USER","ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER","ADMIN")
-                        .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER")
-                        // board 추가
-//                        .antMatchers(HttpMethod.POST, "/*/posts/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.PATCH, "/*/posts/**").hasRole("USER")
-//                        .antMatchers(HttpMethod.GET, "/*/posts").hasRole("USER")
-//                        .antMatchers(HttpMethod.GET, "/*/posts/**").hasAnyRole("USER","ADMIN")
-//                        .antMatchers(HttpMethod.DELETE, "/*/posts/**").hasRole("USER")
                         .anyRequest().permitAll());
         return http.build();
     }

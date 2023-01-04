@@ -1,6 +1,5 @@
 package com.sns.member.domain.service;
 
-import com.sns.member.enums.MemberStatus;
 import com.sns.security.utils.CustomAuthorityUtils;
 import com.sns.common.exception.BusinessLogicException;
 import com.sns.common.exception.ExceptionCode;
@@ -31,9 +30,9 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
-
     public Member createMember(Member member) {
         verifyExistsEmail(member.getEmail());
+
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encryptedPassword);
 
@@ -42,9 +41,9 @@ public class MemberService {
 
         Member savedMember = memberRepository.save(member);
         savedMember.setCreatedAt(LocalDateTime.now());
-        member.setMemberStatus(MemberStatus.WELCOME);
         return savedMember;
     }
+
 
     public Member updateMember(Member member) {
         Member patchMember = memberRepository.findByMemberId(member.getMemberId());
@@ -61,7 +60,6 @@ public class MemberService {
                 .ifPresent(memberStatus -> patchMember.setMemberStatus(memberStatus));
 
         patchMember.setModifiedAt(LocalDateTime.now());
-        member.setMemberStatus(MemberStatus.DONE);
         return memberRepository.save(patchMember);
 
     }
@@ -74,6 +72,7 @@ public class MemberService {
         return memberRepository.findAll(PageRequest.of(page, size,
                 Sort.by("memberId").descending()));
     }
+
 
     public void deleteMember(String email) {
         Member findMember = findVerifiedMemberByEmail(email);

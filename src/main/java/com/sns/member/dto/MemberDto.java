@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberDto {
     private Long memberId;
-    private Long postId;
+    private Long boardId;
     private Long commentId;
     private String email;
     private String nickname;
@@ -19,9 +19,9 @@ public class MemberDto {
 
 
     @QueryProjection
-    public MemberDto(Long memberId, Long postId, Long commentId, String email, String nickname, String name, String phone, String address, String birthday) {
+    public MemberDto(Long memberId, Long boardId, Long commentId, String email, String nickname, String name, String phone, String address, String birthday) {
         this.memberId = memberId;
-        this.postId = postId;
+        this.boardId = boardId;
         this.commentId = commentId;
         this.email = email;
         this.nickname = nickname;
@@ -32,9 +32,9 @@ public class MemberDto {
     }
 
     @QueryProjection
-    public MemberDto(Long memberId, Long postId, String nickname) {
+    public MemberDto(Long memberId, Long boardId, String nickname) {
         this.memberId = memberId;
-        this.postId = postId;
+        this.boardId = boardId;
         this.nickname = nickname;
     }
 }

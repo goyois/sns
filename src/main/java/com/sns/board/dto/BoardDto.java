@@ -3,6 +3,7 @@ package com.sns.board.dto;
 import com.sns.member.dto.ResponseDto;
 import lombok.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 //@Data 검색해보기
@@ -43,8 +44,6 @@ public class BoardDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-
     }
-
 
 }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class BoardService {
 
     private final BoardRepository boardRepository;

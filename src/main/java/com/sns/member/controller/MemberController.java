@@ -5,9 +5,7 @@ import com.sns.common.dto.MultiResponseDto;
 import com.sns.common.dto.SingleResponseDto;
 import com.sns.member.domain.entity.Member;
 import com.sns.member.domain.service.MemberService;
-import com.sns.member.dto.MemberDto;
 import com.sns.member.dto.RequestDto;
-import com.sns.member.dto.ResponseDto;
 import com.sns.member.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +14,15 @@ import org.springframework.data.domain.Page;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import java.net.URI;
+
+import java.security.Principal;
 import java.util.List;
 
 
@@ -35,6 +35,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
 
+
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody RequestDto.Post post) {
         Member member = memberService.createMember(mapper.postToMember(post));
@@ -42,17 +43,15 @@ public class MemberController {
     }
 
     @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
-                                      @Valid @RequestBody RequestDto.Patch patch) {
-        patch.setMemberId(memberId);
+    public ResponseEntity patchMember(@Valid @RequestBody RequestDto.Patch patch,Principal principal){
+        patch.setMemberId(memberService.findVerifiedMemberByEmail(principal.getName()).getMemberId());
         Member member = memberService.updateMember(mapper.patchToMember(patch));
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.OK);
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
-        Member member = memberService.findMember(memberId);
+    public ResponseEntity getMember(Principal principal) {
+        Member member = memberService.findVerifiedMemberByEmail(principal.getName());
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.memberToResponse(member)),HttpStatus.OK);
     }
 
@@ -64,21 +63,12 @@ public class MemberController {
         return new ResponseEntity<>(new MultiResponseDto<>(mapper.MembersToResponse(members),pageMembers),HttpStatus.OK);
     }
 
-
-//    @DeleteMapping("/{member-id}")
-//    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
-//        memberService.deleteMember(memberId);
-//        return new ResponseEntity(HttpStatus.NO_CONTENT);
-//    }
-
-//test
-    @DeleteMapping("/{member-id}")
-    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
-        memberService.deleteMember(memberId);
+    @DeleteMapping("/delete/{member-id}")
+    public ResponseEntity deleteMember( Principal principal) {
+        Member member = memberService.findVerifiedMemberByEmail(principal.getName());
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+
     }
-
-
 
     @GetMapping("/hello")
     public String hello() {

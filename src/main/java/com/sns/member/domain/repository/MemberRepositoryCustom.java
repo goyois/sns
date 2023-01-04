@@ -1,14 +1,10 @@
-//package com.sns.member.domain.repository;
-//
-//import com.sns.member.dto.MemberConditionDto;
-//import com.sns.member.dto.MemberDto;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//
-//import java.util.List;
-//
-//public interface MemberRepositoryCustom {
-//    List<MemberDto> searchMember(MemberConditionDto conditionDto);
-//    Page<MemberDto> searchPageSimple(MemberConditionDto condition, Pageable pageable); //단순한 쿼리
-//    Page<MemberDto> searchPageComplex(MemberConditionDto condition, Pageable pageable);
-//}
+package com.sns.member.domain.repository;
+
+import com.sns.member.dto.MemberDto;
+
+import java.util.List;
+
+public interface MemberRepositoryCustom {
+    List<MemberDto> getMemberByBoardId(Long boardId);  //특정 게시물을 작성한 특정 유저를 조회한다.
+    List<MemberDto> getMemberByCommentId(Long CommentId);  //특정 댓글을 작성한 특정 유저를 조회한다.
+}

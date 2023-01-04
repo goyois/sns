@@ -33,6 +33,7 @@ public interface BoardMapper {
                         .createdAt(board.getCreatedAt())
                         .modifiedAt(board.getModifiedAt())
                         .member(memberMapper.memberToResponseMain(board.getMember()))
+//                        .member(memberMapper.memberToResponse(board.getMember()))
                         .build();
         }
 

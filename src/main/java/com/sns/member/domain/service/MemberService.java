@@ -1,6 +1,6 @@
 package com.sns.member.domain.service;
 
-import com.sns.security.auth.CustomAuthorityUtils;
+import com.sns.security.utils.CustomAuthorityUtils;
 import com.sns.common.exception.BusinessLogicException;
 import com.sns.common.exception.ExceptionCode;
 import com.sns.member.domain.entity.Member;
@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,28 +40,32 @@ public class MemberService {
         member.setRoles(roles);
 
         Member savedMember = memberRepository.save(member);
+        savedMember.setCreatedAt(LocalDateTime.now());
         return savedMember;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
+
     public Member updateMember(Member member) {
-        Member findMember = findVerifiedMember(member.getMemberId());
+        Member patchMember = memberRepository.findByMemberId(member.getMemberId());
 
         Optional.ofNullable(member.getName())
-                .ifPresent(name -> findMember.setName(name));
+                .ifPresent(name -> patchMember.setName(name));
         Optional.ofNullable(member.getPassword())
-                .ifPresent(password -> findMember.setPassword(password));
+                .ifPresent(password -> patchMember.setPassword(passwordEncoder.encode(member.getPassword())));
         Optional.ofNullable(member.getPhone())
-                .ifPresent(phone -> findMember.setPhone(phone));
+                .ifPresent(phone -> patchMember.setPhone(phone));
         Optional.ofNullable(member.getAddress())
-                .ifPresent(address -> findMember.setAddress(address));
+                .ifPresent(address -> patchMember.setAddress(address));
+        Optional.ofNullable(member.getMemberStatus())
+                .ifPresent(memberStatus -> patchMember.setMemberStatus(memberStatus));
 
-        return memberRepository.save(findMember);
+        patchMember.setModifiedAt(LocalDateTime.now());
+        return memberRepository.save(patchMember);
+
     }
-
     @Transactional(readOnly = true)
-    public Member findMember(long memberId) {
-        return findVerifiedMember(memberId);
+    public Member findMember(String email) {
+        return findVerifiedMemberByEmail(email);
     }
 
     public Page<Member> findMembers(int page, int size) {
@@ -68,30 +74,19 @@ public class MemberService {
     }
 
 
-    public void deleteMember(long memberId) {
-        Member findMember = findVerifiedMember(memberId);
+    public void deleteMember(String email) {
+        Member findMember = findVerifiedMemberByEmail(email);
         memberRepository.delete(findMember);
     }
 
     @Transactional(readOnly = true)
-    public Member findVerifiedMember(long memberId) {
-        Optional<Member> optionalMember =
-                memberRepository.findById(memberId);
-        Member findMember =
-                optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    public Member findVerifiedMemberByEmail(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        Member findMember = member.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         return findMember;
     }
 
-    //추가 이메일 확인
-    public Member findVerifiedMemberByEmail(String email) {
-        Optional<Member> optionalMember =
-                memberRepository.findByEmail(email);
-        Member findMember =
-                optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        return findMember;
-    }
 
     private void verifyExistsEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);

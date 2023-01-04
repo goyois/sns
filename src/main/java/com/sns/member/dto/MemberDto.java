@@ -1,43 +1,42 @@
 package com.sns.member.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
-
-//  Q타입 dto
 @Data
+@NoArgsConstructor
 public class MemberDto {
-    private long memberId;
+    private Long memberId;
+    private Long postId;
+    private Long commentId;
     private String email;
-    private String password;
-    private String name;
-    private Integer age;
     private String nickname;
+    private String name;
     private String phone;
     private String address;
     private String birthday;
 
 
-
-
     @QueryProjection
-    public MemberDto(long memberId, String email, String password, String name, Integer age, String nickname, String phone, String address, String birthday) {
+    public MemberDto(Long memberId, Long postId, Long commentId, String email, String nickname, String name, String phone, String address, String birthday) {
         this.memberId = memberId;
+        this.postId = postId;
+        this.commentId = commentId;
         this.email = email;
-        this.password = password;
-        this.name = name;
-        this.age = age;
         this.nickname = nickname;
+        this.name = name;
         this.phone = phone;
         this.address = address;
         this.birthday = birthday;
+    }
 
-
+    @QueryProjection
+    public MemberDto(Long memberId, Long postId, String nickname) {
+        this.memberId = memberId;
+        this.postId = postId;
+        this.nickname = nickname;
     }
 }
+
+

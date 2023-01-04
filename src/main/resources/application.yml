@@ -25,6 +25,26 @@ server:
   servlet:
     encoding:
       force-response: true
+#spring:
+#  jpa:
+#    hibernate:
+#      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+#      ddl-auto: create
+#    show-sql: true
+#    properties.hibernate.format_sql : true
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://sideprojectdb.cef2qki7amco.ap-northeast-2.rds.amazonaws.com/sns?serverTimezone=Asia/Seoul
+#    username: adminside
+#    password: 'si159de357!8'
+##    initialization-mode: always
+#logging.level:
+#  org.hibernate.SQL: debug
+#  org.hibernate.type: trace
+#jwt:
+#  key: $rocket12345123451234512345123451234512345123451234512345
+#  access-token-expiration-minutes: 30
+#  refresh-token-expiration-minutes: 420
 
 # mysql로 수정필요
 

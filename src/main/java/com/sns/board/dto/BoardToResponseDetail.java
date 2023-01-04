@@ -16,6 +16,7 @@ public class BoardToResponseDetail {
     private String content;
     private Long boardId;
     private ResponseDto.ResponseMain member;
+//    private ResponseDto.Response member;
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

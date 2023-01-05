@@ -13,8 +13,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment extends BaseEntity {
-
-
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long commentId;
@@ -32,7 +30,4 @@ public class Comment extends BaseEntity {
         @ManyToOne
         @JoinColumn(name = "board_id")
         private Board board;
-
-
-
 }

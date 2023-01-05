@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Board extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardId;
@@ -33,9 +32,4 @@ public class Board extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
-
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "board_id")
-//    private List<Comment> comments = new ArrayList<>();
-
 }

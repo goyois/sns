@@ -1,7 +1,9 @@
 package com.sns.member.domain.entity;
 
+import com.sns.board.entity.Board;
 import com.sns.common.BaseEntity;
 
+import com.sns.member.enums.MemberStatus;
 import lombok.*;
 
 
@@ -38,28 +40,11 @@ public class Member extends BaseEntity {
      * mappedBy = N의 외래키역할의 필드 값을 지정해줌
      * PERSIST = post 상태변화 전파
      */
-//    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-//    private List<Post> posts = new ArrayList<>();
-
-
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<Board> boards = new ArrayList<>();
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.WELCOME;
-
-    public enum MemberStatus {
-        WELCOME("회원가입을 축하드립니다."),
-        DONE("완료되었습니다."),
-        QUIT("회원이 아닙니다.");
-
-        @Getter
-        private String status;
-
-        MemberStatus(String status) {
-            this.status = status;
-        }
-    }
-
-
 }

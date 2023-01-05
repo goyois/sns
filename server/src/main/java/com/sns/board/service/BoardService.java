@@ -37,29 +37,18 @@ public class BoardService {
 
 
     public Board createBoard(Board board, Principal principal) {
-
         Member member = memberService.findVerifiedMemberByEmail(principal.getName());
-
-
         board.setMember(member);
         board.setCreatedAt(LocalDateTime.now());
-
         return boardRepository.save(board);
     }
 
     public Board updateBoard(Board board, Principal principal) {
-
         Optional.ofNullable(board.getTitle()).ifPresent(title -> board.setTitle(title));
         Optional.ofNullable(board.getContent()).ifPresent(content -> board.setContent(content));
-
         Member member = memberService.findVerifiedMemberByEmail(principal.getName());
-
         board.setMember(member);
         board.setCreatedAt(LocalDateTime.now());
-
-//        memberRepository.findByEmail(email).orElseThrow(() ->
-//                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-
         return boardRepository.save(board);
 
     }
@@ -74,7 +63,6 @@ public class BoardService {
                 boardRepository.findById(boardId);
         Board findBoard = optionalPost.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.BOARD_NOT_FOUND));
-
         return findBoard;
     }
 
@@ -83,7 +71,6 @@ public class BoardService {
     }
 
     public void verifyMemberConfirm(Board board, Principal principal) {
-
         if (!Objects.equals(principal.getName(), board.getMember().getEmail())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
@@ -91,18 +78,14 @@ public class BoardService {
 
 
     public Board getBoard(Long boardId) {
-
         Board board = findVerifiedBoard(boardId);
         boardRepository.save(board);
-
         return boardRepository.findByBoardId(boardId);
     }
 
     public Page<Board> getBoardList(int page, int size) {
-
         Pageable pageable = PageRequest.of(page - 1, size,
                 Sort.by("boardId").descending());
         return boardRepository.findAll(pageable);
     }
-
   }

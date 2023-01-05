@@ -53,7 +53,6 @@ public class BoardController {
      * 게시물 등록
      */
 
-    //Todo 인증 토큰받은 email 확인 추가하기 -member에 추가함
     @PostMapping("")
     public ResponseEntity boardPost(@RequestBody BoardDto.Post requestBody, Principal principal) {
 
@@ -124,18 +123,6 @@ public class BoardController {
                         boardToResponseDetail, commentService, commentMapper, page - 1, size, board)
                 , HttpStatus.OK);
     }
-
-
-//    @GetMapping("list/{board-id}")
-//    public ResponseEntity getBoard(@PathVariable("board-id") @Positive Long boardId) {
-//
-//        Board board = boardService.findBoard(boardId);
-//
-//        return new ResponseEntity<>(
-//                new SingleResponseDto<>(boardMapper.boardToPostResponse(board)),
-//                HttpStatus.OK);
-//    }
-
 
     /**
      * 게시물 삭제

@@ -69,10 +69,5 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
 
     }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
 }
 

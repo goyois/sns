@@ -1,10 +1,7 @@
 package com.sns.member.dto;
 
-import com.sns.member.domain.entity.Member;
+import com.sns.member.enums.MemberStatus;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ResponseDto {
     @Getter
@@ -18,11 +15,7 @@ public class ResponseDto {
         private String birthday;
         private String address;
         private String profileImage;
-        private Member.MemberStatus memberStatus;
-
-        public Member.MemberStatus getMemberStatus() {
-            return memberStatus;
-        }
+        private MemberStatus memberStatus;
     }
 
     //추가사항 - 전체 내용 필요없어서 게시물 등록할 때 메일하고 멤버 아이디만 보내는 거 추가

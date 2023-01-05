@@ -1,10 +1,11 @@
 package com.sns.member.dto;
 
-import com.sns.member.domain.entity.Member;
+
+import com.sns.member.enums.MemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -52,11 +53,7 @@ public class RequestDto {
         private String birthday;
         private String address;
         private String profileImage;
-        private Member.MemberStatus memberStatus;
-
-        public void setMemberStatus(Member.MemberStatus memberStatus) {
-            this.memberStatus = memberStatus;
-        }
+        private MemberStatus memberStatus;
 
         public void setMemberId(long memberId) {
             this.memberId = memberId;

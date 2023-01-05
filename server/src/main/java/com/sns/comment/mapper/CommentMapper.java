@@ -10,13 +10,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CommentMapper {
-
     default Comment commentPostToPost(CommentDto.Post requestBody, Board board) {
-
         Comment comment = new Comment();
         comment.setComment(requestBody.getComment());
         comment.setBoard(board);
-
         return comment;
     }
 

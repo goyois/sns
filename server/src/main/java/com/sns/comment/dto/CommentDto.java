@@ -14,21 +14,16 @@ public class CommentDto {
     @Setter
     @AllArgsConstructor
     public static class Post {
-
         private Long boardId;
         private String comment;
-
     }
 
     @Getter
     @Setter
     @AllArgsConstructor
     public static class Patch {
-
         private Long commentId;
         private String comment;
-
-
     }
 
     @Getter
@@ -36,11 +31,9 @@ public class CommentDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response {
-
         private Long commentId;
         private String comment;
         private ResponseDto.ResponseMain member;
-
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 

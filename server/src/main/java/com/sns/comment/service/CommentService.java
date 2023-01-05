@@ -43,32 +43,21 @@ public class CommentService {
     }
 
     public Comment createComment(Long boardId, Comment comment, Principal principal) {
-
-//        Member member = memberRepository.findByEmail(email).orElseThrow(() ->
-//                new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Member member = memberService.findVerifiedMemberByEmail(principal.getName());
-
         Board board = boardService.getBoard(boardId);
-
         comment.setMember(member);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setBoard(board);
-
-
         return commentRepository.save(comment);
 
     }
 
 
     public Comment updateComment(Comment comment, Long boardId, Principal principal) {
-
         Board board = boardService.getBoard(boardId);
         Comment findComment = commentRepository.findById(comment.getCommentId()).get();
-
         verifyMemberConfirm(findComment, principal);
-
         findComment.setComment(comment.getComment());
-
         Comment saved = commentRepository.save(findComment);
         comment.setModifiedAt(saved.getBoard().getModifiedAt());
         return saved;
@@ -77,19 +66,14 @@ public class CommentService {
 
 
     public void deleteComment(Long commentId, Long boardId, Principal principal){
-
         Board board = boardService.getBoard(boardId);
         Comment findComment = commentRepository.findById(commentId).get();
-
         verifyMemberConfirm(findComment, principal);
-
-
        commentRepository.delete(findComment);
 
 
     }
     public Comment getComment(Long commentId) {
-
         Comment comment = findVerifiedComment(commentId);
         return comment;
     }
@@ -102,7 +86,6 @@ public class CommentService {
     }
 
     public void verifyMemberConfirm(Comment comment, Principal principal) {
-
         if (!Objects.equals(principal.getName(), comment.getMember().getEmail())) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
@@ -110,10 +93,8 @@ public class CommentService {
 
     //답변 조회
     public Page<Comment> readComments(Board board, int page, int size) {
-
         Page<Comment> comments = commentRepository.findCommentsByBoard(
                 PageRequest.of(page, size, Sort.by("commentId").descending()), board);
-
         return comments;
     }
 }

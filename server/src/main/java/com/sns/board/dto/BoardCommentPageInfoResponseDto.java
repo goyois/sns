@@ -13,13 +13,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class BoardCommentPageInfoResponseDto<T> {
-
     private T data;
-
     private List<CommentDto.Response> comments;
-
     private PageInfo pageInfo;
 
-//    public BoardCommentPageInfoResponseDto(T data, Page page, List<CommentDto.Response> comments)
-//        this.data = data;
 }

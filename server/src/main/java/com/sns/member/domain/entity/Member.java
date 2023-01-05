@@ -16,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "members")
-@ToString
 public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +41,7 @@ public class Member extends BaseEntity {
      */
     @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Board> boards = new ArrayList<>();
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
     @Enumerated(EnumType.STRING)

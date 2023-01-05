@@ -29,6 +29,12 @@ server:
 mail:
   address:
     admin: admin@gmail.com
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
 #jwt:
 #  key: ${JWT_SECRET_KEY}
 #  access-token-expiration-minutes: 30

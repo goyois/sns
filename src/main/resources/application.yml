@@ -1,0 +1,41 @@
+spring:
+  #    defer-datasource-initialization : true
+  #  sql:
+  #    init:
+  #      mode: always
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "${security.google.client-id}"
+            client-secret: "${security.google.client-secret}"
+            scope:
+              - email
+              - profile
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+---
+spring:
+  profiles:
+    active: prod
+---
+spring:
+  profiles:
+    active: local
+---
+server:
+  servlet:
+    encoding:
+      force-response: true
+mail:
+  address:
+    admin: admin@gmail.com
+#jwt:
+#  key: ${JWT_SECRET_KEY}
+#  access-token-expiration-minutes: 30
+#  refresh-token-expiration-minutes: 420

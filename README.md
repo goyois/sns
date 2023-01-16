@@ -2,9 +2,17 @@ SNS 웹 서비스 개발 중
 
 
 
-## MEMBER
+# MEMBER
 
-member,common,security + jwt : goyois
+### goyois
+
+- member
+- common
+- security + jwt
 
 
-board,post : kclown0
+### kclown0
+
+- board
+- comment
+

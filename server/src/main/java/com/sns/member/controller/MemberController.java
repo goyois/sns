@@ -36,6 +36,7 @@ public class MemberController {
     private final MemberMapper mapper;
 
 
+    //회원가입 메서드
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody RequestDto.Post post) {
         Member member = memberService.createMember(mapper.postToMember(post));

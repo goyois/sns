@@ -20,6 +20,4 @@ public class BoardCommentPageInfoResponseDto<T> {
 
     private PageInfo pageInfo;
 
-//    public BoardCommentPageInfoResponseDto(T data, Page page, List<CommentDto.Response> comments)
-//        this.data = data;
 }

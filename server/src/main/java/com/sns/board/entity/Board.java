@@ -10,11 +10,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@Entity
 public class Board extends BaseEntity {
 
     @Id
@@ -33,9 +32,5 @@ public class Board extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
-
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "board_id")
-//    private List<Comment> comments = new ArrayList<>();
 
 }

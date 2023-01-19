@@ -12,6 +12,7 @@ import com.sns.common.dto.SingleResponseDto;
 import com.sns.board.dto.BoardListDto;
 import com.sns.board.service.BoardService;
 import com.sns.member.mapper.MemberMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import java.security.Principal;
 import java.util.List;
 
 
+@RequiredArgsConstructor
 @RequestMapping("/v1/boards") //로그인 시 아이디 넣기
 @RestController
 @Validated
@@ -35,25 +37,23 @@ public class BoardController {
     private final BoardMapper boardMapper;
     private final CommentService commentService;
     private final CommentMapper commentMapper;
-
     private final MemberMapper memberMapper;
 
     //Todo member 받아오기 - 게시글은 로그인 시에만 작성가능
 
-    public BoardController(BoardService boardService, BoardMapper boardMapper, CommentService commentService, CommentMapper commentMapper, MemberMapper memberMapper) {
-        this.boardService = boardService;
-        this.boardMapper = boardMapper;
-        this.commentService = commentService;
-        this.commentMapper = commentMapper;
-        this.memberMapper = memberMapper;
+//    public BoardController(BoardService boardService, BoardMapper boardMapper, CommentService commentService, CommentMapper commentMapper, MemberMapper memberMapper) {
+//        this.boardService = boardService;
+//        this.boardMapper = boardMapper;
+//        this.commentService = commentService;
+//        this.commentMapper = commentMapper;
+//        this.memberMapper = memberMapper;
 
-    }
+//    }
 
     /**
      * 게시물 등록
      */
 
-    //Todo 인증 토큰받은 email 확인 추가하기 -member에 추가함
     @PostMapping("")
     public ResponseEntity boardPost(@RequestBody BoardDto.Post requestBody, Principal principal) {
 
@@ -90,8 +90,6 @@ public class BoardController {
     /**
      * 전체 게시물 조회
      */
-
-    //Todo 전체 게시물 조회 추가하기
     @GetMapping("/list")
     public ResponseEntity getBoardList(@RequestParam(name = "page", required = false, defaultValue = "1") int page,
                                           @RequestParam(name = "size", required = false, defaultValue = "15") int size) {
@@ -126,21 +124,9 @@ public class BoardController {
     }
 
 
-//    @GetMapping("list/{board-id}")
-//    public ResponseEntity getBoard(@PathVariable("board-id") @Positive Long boardId) {
-//
-//        Board board = boardService.findBoard(boardId);
-//
-//        return new ResponseEntity<>(
-//                new SingleResponseDto<>(boardMapper.boardToPostResponse(board)),
-//                HttpStatus.OK);
-//    }
-
-
     /**
      * 게시물 삭제
      */
-
     @DeleteMapping("/{board-id}")
     public ResponseEntity deleteBoard(@PathVariable("board-id") @Positive Long boardId) {
 

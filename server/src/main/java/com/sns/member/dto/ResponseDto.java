@@ -23,6 +23,7 @@ public class ResponseDto {
         public Member.MemberStatus getMemberStatus() {
             return memberStatus;
         }
+<<<<<<< HEAD:server/src/main/java/com/sns/member/dto/ResponseDto.java
     }
 
     //추가사항 - 전체 내용 필요없어서 게시물 등록할 때 메일하고 멤버 아이디만 보내는 거 추가
@@ -35,6 +36,8 @@ public class ResponseDto {
 
         private long memberId;
         private String email;
+=======
+>>>>>>> 55624373aac4732eb1e92a4c9bc6e9fed8791ace:src/main/java/com/sns/member/dto/ResponseDto.java
     }
 
 }

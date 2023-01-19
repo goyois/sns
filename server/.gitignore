@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+.src
+
+
 ### STS ###
 .apt_generated
 .classpath
@@ -35,6 +38,10 @@ out/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD:server/.gitignore
 
 application-local.yml
 #application-local.yml
+=======
+application-local.yml
+>>>>>>> 55624373aac4732eb1e92a4c9bc6e9fed8791ace:.gitignore

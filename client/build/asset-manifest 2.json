@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e6c13ad2.css",
+    "main.js": "/static/js/main.bc24f48e.js",
+    "static/js/787.acbf0292.chunk.js": "/static/js/787.acbf0292.chunk.js",
+    "static/media/메인2.jpeg": "/static/media/메인2.6a2c2544a96966c375bd.jpeg",
+    "static/media/게시물.jpeg": "/static/media/게시물.912d9038e59dffab1785.jpeg",
+    "static/media/댓글.jpeg": "/static/media/댓글.51b54329c89d77a0f74f.jpeg",
+    "static/media/로그인메인1.jpeg": "/static/media/로그인메인1.023fd3accb05f47b27ab.jpeg",
+    "static/media/메인1.jpeg": "/static/media/메인1.c41ba24b3039fdcfa5a2.jpeg",
+    "index.html": "/index.html",
+    "main.e6c13ad2.css.map": "/static/css/main.e6c13ad2.css.map",
+    "main.bc24f48e.js.map": "/static/js/main.bc24f48e.js.map",
+    "787.acbf0292.chunk.js.map": "/static/js/787.acbf0292.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.bc24f48e.js"
+  ]
+}

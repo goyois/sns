@@ -4,13 +4,13 @@ function Signup() {
   const passwordRegEx = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
   function goLogin() {
-    window.history.pushState("", "", "https://sns.mywebboard.com/login");
-    window.history.pushState("", "", "https://sns.mywebboard.com/login");
+    window.history.pushState("", "", "http://localhost:3000/login");
+    window.history.pushState("", "", "http://localhost:3000/login");
     window.history.back();
   }
   function postForm(password, email, name) {
     axios
-      .post("https://server.mywebboard.com/v1/api/members", {
+      .post("http://localhost:8080/api/v1/members", {
         password,
         email,
         name,

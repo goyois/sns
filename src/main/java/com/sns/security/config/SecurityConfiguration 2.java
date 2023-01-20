@@ -1,7 +1,7 @@
 package com.sns.security.config;
 
 import com.sns.security.utils.CustomAuthorityUtils;
-import com.sns.security.handler.MemberAuthenticationEntryPoint;
+import com.sns.security.utils.MemberAuthenticationEntryPoint;
 import com.sns.security.filter.JwtAuthenticationFilter;
 import com.sns.security.filter.JwtVerificationFilter;
 import com.sns.security.handler.MemberAccessDeniedHandler;
@@ -26,9 +26,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.List;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -44,7 +41,7 @@ public class SecurityConfiguration {
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .csrf().disable()
-                .cors(withDefaults())
+                .cors(Customizer.withDefaults())
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)   //세션생성x
                 .and()
                 .formLogin().disable()
@@ -86,8 +83,6 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PATCH","DELETE"));
 
-        configuration.setAllowedHeaders(List.of(CorsConfiguration.ALL));
-        configuration.addExposedHeader("Authorization");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

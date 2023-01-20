@@ -14,14 +14,14 @@ function Login({ isLogin, setIsLogin, setTokenEmail }) {
   }
 
   function goHome() {
-    window.history.pushState("", "", "http://localhost:3000");
-    window.history.pushState("", "", "http://localhost:3000");
+    window.history.pushState("", "", "https://sns.mywebboard.com/");
+    window.history.pushState("", "", "https://sns.mywebboard.com/");
     window.history.back();
   }
 
   function postForm(username, password) {
     axios
-      .post("http://localhost:8080/v1/auth/login", {
+      .post("https://server.mywebboard.com/login", {
         username,
         password,
       })

@@ -12,6 +12,17 @@ spring:
     password: ${ MYSQL_PASSWORD }
     data: classpath:/data.sql
 #    initialization-mode: always
+cloud:
+  aws:
+    credentials:
+      access-key: ${ AWS_ACCESS_KEY }
+      secret-key: ${ AWS_SECRET_ACCESS_KEY }
+    s3:
+      bucket: ${ IMAGE_BUCKET }
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 jwt:
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30

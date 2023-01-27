@@ -18,7 +18,17 @@ spring:
     password: 'rlaejrdn12'
     data: classpath:/data.sql
 #    initialization-mode: always
-
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAXDXAYIJXRZMTIZXE
+      secret-key: 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
+    s3:
+      bucket: mywebboard.com
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 
 
 

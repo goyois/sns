@@ -17,19 +17,12 @@ spring:
     username: admin
     password: 'rlaejrdn12'
     data: classpath:/data.sql
-
 #    initialization-mode: always
-cloud:
-  aws:
-    credentials:
-      access-key: AKIAXDXAYIJX3YNIYLGZ
-      secret-key: r1d+oX+Q5B0G0GLmdgoda/0FrGbQDYigxRO6HYo/pOM=
-    s3:
-      bucket: mywebboard.com
-    region:
-      static: ap-northeast-2
-    stack:
-      auto: false
+
+
+
+
+
 jwt:
   key: $rocket12345123451234512345123451234512345123451234512345
   access-token-expiration-minutes: 30

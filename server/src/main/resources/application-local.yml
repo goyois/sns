@@ -7,23 +7,23 @@ spring:
     properties.hibernate.format_sql : true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${ MYSQL_URL }
-    username: ${ MYSQL_USERNAME }
-    password: ${ MYSQL_PASSWORD }
+    url: jdbc:mysql://localhost:3306/ecommerce?serverTimezone=Asia/Seoul
+    username: root
+    password: 'xcz119'
     data: classpath:/data.sql
 #    initialization-mode: always
 cloud:
   aws:
     credentials:
-      access-key: ${ AWS_ACCESS_KEY }
-      secret-key: ${ AWS_SECRET_ACCESS_KEY }
+      access-key: AKIAXDXAYIJX3YNIYLGZ
+      secret-key: r1d+oX+Q5B0G0GLmdgoda/0FrGbQDYigxRO6HYo/pOM=
     s3:
-      bucket: ${ IMAGE_BUCKET }
+      bucket: mywebboard.com
     region:
       static: ap-northeast-2
     stack:
       auto: false
-#jwt:
-#  key: ${JWT_SECRET_KEY}
-#  access-token-expiration-minutes: 30
-#  refresh-token-expiration-minutes: 420
+jwt:
+  key: $rocket12345123451234512345123451234512345123451234512345
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420

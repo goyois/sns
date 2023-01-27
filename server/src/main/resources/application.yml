@@ -13,30 +13,32 @@ spring:
             scope:
               - email
               - profile
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+
 ---
+
 spring:
   profiles:
     active: prod
+
 ---
+
 spring:
   profiles:
     active: local
+
 ---
+
 server:
-  servlet:
-    encoding:
-      force-response: true
+  port : 8080
+  servlet :
+    context-path : /
+
 mail:
   address:
     admin: admin@gmail.com
-logging:
-  level:
-    com:
-      amazonaws:
-        util:
-          EC2MetadataUtils: error
-#jwt:
-#  key: ${JWT_SECRET_KEY}
-#  access-token-expiration-minutes: 30
-#  refresh-token-expiration-minutes: 420
-

@@ -7,10 +7,17 @@ spring:
     properties.hibernate.format_sql : true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ecommerce?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/sns?serverTimezone=Asia/Seoul
     username: root
     password: 'xcz119'
     data: classpath:/data.sql
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://database-2.cctpabcwfz7d.ap-northeast-2.rds.amazonaws.com:3306/sns?serverTimezone=Asia/Seoul
+#    username: admin
+#    password: 'rlaejrdn12'
+#    data: classpath:/data.sql
+
 #    initialization-mode: always
 cloud:
   aws:

@@ -24,7 +24,7 @@ cloud:
       access-key: AKIAXDXAYIJXRZMTIZXE
       secret-key: 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
     s3:
-      bucket: mywebboard.com
+      bucket: mywebboard
     region:
       static: ap-northeast-2
     stack:

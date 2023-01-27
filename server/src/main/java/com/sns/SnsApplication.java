@@ -20,6 +20,4 @@ public class SnsApplication {
 	JPAQueryFactory jpaQueryFactory(EntityManager em) {
 		return new JPAQueryFactory(em);
 	}
-
-	
 }

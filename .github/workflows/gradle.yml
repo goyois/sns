@@ -11,13 +11,13 @@ on:
   push:
     branches: [ "main" ]
     
-  
-  
+    
+    
 permissions:
   contents: read
   
 env:
-  S3_BUCKET_NAME: mywebboard.com
+  S3_BUCKET_NAME: mywebboard
   working-directory: ./server
   RESOURCE_PATH: ./server/src/main/resources/application-server.yml
 

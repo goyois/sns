@@ -43,6 +43,10 @@ jobs:
           spring.datasource.username: ${{ secrets.MYSQL_USERNAME }}
           spring.datasource.password: ${{ secrets.MYSQL_PASSWORD }}
           jwt.key: ${{ secrets.JWT_KEY}}
+          cloud.aws.credentials.access-key: ${{ secrets.S3_ACCESS_KEY }}
+          cloud.aws.credentials.secret-key: ${{ secrets.S3_SECRET_KEY }}
+          cloud.aws.region.static: ${{ secrets.S3_REGION }}
+          cloud.aws.s3.bucket: ${{ secrets.S3_BUCKET }}
           
     - name: Change mode gradle
       run: chmod +x gradlew
@@ -71,3 +75,11 @@ jobs:
     - name: Upload to S3
       run: aws s3 cp --region ap-northeast-2 ./websns.zip s3://$S3_BUCKET_NAME/websns.zip
       working-directory: ${{ env.working-directory }}
+      
+      # CodeDeploy에게 배포 명령
+    - name: Code Deploy
+      run: >
+        aws deploy create-deployment --application-name websns
+        --deployment-config-name CodeDeployDefault.AllAtOnce
+        --deployment-group-name websns-group
+        --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=websns-deploy.zip

@@ -25,7 +25,6 @@ import javax.validation.constraints.Positive;
 import java.security.Principal;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/v1/members")
 @RequiredArgsConstructor

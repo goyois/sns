@@ -61,16 +61,14 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/*/members").hasRole("ADMIN")
                         .antMatchers(HttpMethod.GET, "/*/members/**").hasAnyRole("USER", "ADMIN")
                         .antMatchers(HttpMethod.DELETE, "/*/members/**").hasRole("USER") //
-                        .antMatchers(HttpMethod.POST, "/*/board").hasAnyRole("USER")
-                        .antMatchers(HttpMethod.PATCH, "/*/board/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/board/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/board").permitAll()
-                        .antMatchers(HttpMethod.DELETE, "/*/board").hasAnyRole("USER","ADMIN")
-                        .antMatchers(HttpMethod.POST, "/*/comment").hasAnyRole("USER")
-                        .antMatchers(HttpMethod.PATCH, "/*/comment/**").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/*/comment/**").hasAnyRole("USER", "ADMIN")
-                        .antMatchers(HttpMethod.GET, "/*/comment").permitAll()
-                        .antMatchers(HttpMethod.DELETE, "/*/comment").hasAnyRole("USER","ADMIN")
+
+                        .antMatchers(HttpMethod.POST, "/*/boards").hasAnyRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/*/boards/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/*/boards").hasAnyRole("USER","ADMIN")
+
+                        .antMatchers(HttpMethod.POST, "/*/*/comments").hasAnyRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/*/*/comments/**").hasRole("USER")
+                        .antMatchers(HttpMethod.DELETE, "/*/*/comments").hasAnyRole("USER","ADMIN")
                         .anyRequest().permitAll());
         return http.build();
     }

@@ -22,6 +22,9 @@ public class MemberAuthenticationEntryPoint implements AuthenticationEntryPoint 
                          AuthenticationException authException) throws IOException, ServletException {
 
         Exception exception = (Exception) request.getAttribute("exception");
+        ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
+
+        logExceptionMessage(authException, exception);
     }
 
 
